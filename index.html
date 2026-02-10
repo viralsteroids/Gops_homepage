@@ -3,9 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GridOps.app — Turn Excel models into planning apps. Fast.</title>
-  <meta name="description" content="GridOps turns complex Excel planning models into deployable planning apps: structured model + input forms + validations. Convert, don’t rebuild." />
-  <meta name="theme-color" content="#0b0f19" />
+
+  <title>GridOps.app — Turn Excel planning models into deployable apps. Fast.</title>
+  <meta name="description" content="GridOps extracts structure and logic from real-world spreadsheets, helps you map it to dimensions, and generates a deployable model + input forms you can iterate on." />
+
+  <link rel="icon" href="assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="assets/icon-512.png" />
+  <link rel="manifest" href="assets/site.webmanifest" />
+
+  <meta property="og:title" content="GridOps.app" />
+  <meta property="og:description" content="Turn Excel planning models into deployable apps. Fast." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/hero.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
 
   <style>
     :root{
@@ -50,8 +62,6 @@
         linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
       background-size: 64px 64px;
       opacity:.12;
-      filter: blur(.0px);
-      transform: translateZ(0);
       pointer-events:none;
       mask-image: radial-gradient(circle at 50% 10%, rgba(0,0,0,1) 0%, rgba(0,0,0,.82) 40%, rgba(0,0,0,0) 78%);
       animation: gridDrift 18s linear infinite;
@@ -79,44 +89,25 @@
       position:sticky;
       top:0;
       z-index: 50;
-      background: rgba(7,9,20,.50);
+      background: rgba(7,9,20,.55);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(255,255,255,.08);
     }
     .nav{
       display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 0;
+      padding: 12px 0;
       gap: 18px;
     }
     .brand{
       display:flex; align-items:center; gap:12px;
-      min-width: 160px;
+      min-width: 220px;
     }
-    .logo{
-      width:34px; height:34px; border-radius: 11px;
-      background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.35), transparent 52%),
-                  linear-gradient(135deg, rgba(124,58,237,.95), rgba(6,182,212,.95));
-      box-shadow: 0 10px 24px rgba(124,58,237,.22);
-      border: 1px solid rgba(255,255,255,.18);
-      position:relative;
-      overflow:hidden;
+    .brand-logo{
+      height: 26px;
+      width: auto;
+      display:block;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
     }
-    .logo:after{
-      content:"";
-      position:absolute; inset:-30%;
-      background: linear-gradient(120deg, transparent 25%, rgba(255,255,255,.35) 45%, transparent 64%);
-      transform: rotate(12deg);
-      animation: shimmer 3.2s ease-in-out infinite;
-      opacity:.75;
-    }
-    @keyframes shimmer{
-      0%{ transform: translateX(-35%) rotate(12deg); opacity:.0; }
-      20%{ opacity:.55; }
-      50%{ opacity:.35; }
-      100%{ transform: translateX(35%) rotate(12deg); opacity:0; }
-    }
-    .brand b{ font-size: 14px; letter-spacing:.2px; }
-    .brand span{ font-size: 12px; color: var(--muted2); display:block; margin-top:2px; }
 
     nav ul{
       list-style:none; margin:0; padding:0;
@@ -159,14 +150,10 @@
       border-color: rgba(34,197,94,.28);
       background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(6,182,212,.92));
       color: rgba(7,9,20,.92);
-      font-weight: 700;
+      font-weight: 800;
       box-shadow: 0 14px 38px rgba(34,197,94,.18);
     }
-    .btn.primary:hover{
-      filter: brightness(1.03);
-      border-color: rgba(255,255,255,.22);
-      transform: translateY(-1px);
-    }
+
     .btn.ghost{
       background: transparent;
       border-color: rgba(255,255,255,.14);
@@ -190,20 +177,15 @@
       box-shadow: 0 0 0 3px rgba(34,197,94,.18);
     }
 
-    /* Hero */
     main{ position:relative; z-index:2; }
     section{ padding: 76px 0; }
-    .hero{
-      padding: 70px 0 46px;
-    }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.12fr .88fr;
-      gap: 26px;
-      align-items: start;
-    }
+
+    /* HERO (stacked) */
+    .hero{ padding: 62px 0 44px; }
+    .hero-copy{ max-width: 74ch; }
+
     h1{
-      font-size: clamp(34px, 4.2vw, 56px);
+      font-size: clamp(36px, 4.2vw, 60px);
       line-height: 1.02;
       margin: 14px 0 14px;
       letter-spacing: -0.02em;
@@ -212,9 +194,9 @@
       font-size: clamp(16px, 1.3vw, 18px);
       line-height: 1.55;
       color: var(--muted);
-      max-width: 60ch;
       margin: 0 0 18px;
     }
+
     .hero-points{
       display:grid;
       grid-template-columns: 1fr;
@@ -238,42 +220,8 @@
     }
     .point b{ font-size: 13px; }
     .point p{ margin: 2px 0 0; font-size: 13px; color: var(--muted2); line-height: 1.45; }
-    .hero-actions{ display:flex; gap:10px; flex-wrap: wrap; margin: 14px 0 10px; }
-    .fineprint{
-      font-size: 12px; color: rgba(255,255,255,.50);
-      line-height: 1.35;
-      margin-top: 10px;
-      max-width: 64ch;
-    }
 
-    /* Hero "object" */
-    .hero-object{
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-      isolation:isolate;
-    }
-    .hero-object::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(circle at 30% 15%, rgba(124,58,237,.30), transparent 55%),
-                  radial-gradient(circle at 75% 20%, rgba(34,197,94,.20), transparent 55%),
-                  radial-gradient(circle at 50% 95%, rgba(6,182,212,.14), transparent 60%);
-      opacity:.9;
-      z-index:0;
-    }
-    .hero-object-inner{
-      position:relative;
-      z-index:1;
-      padding: 18px 16px 16px;
-    }
-    .hero-object-top{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      margin-bottom: 14px;
-    }
+    .hero-actions{ display:flex; gap:10px; flex-wrap: wrap; margin: 14px 0 10px; align-items:center; }
     .badge{
       font-size: 12px;
       padding: 6px 10px;
@@ -284,239 +232,57 @@
       display:inline-flex; align-items:center; gap:8px;
       white-space:nowrap;
     }
-    .badge strong{
-      color: rgba(255,255,255,.92);
-      font-weight: 700;
-    }
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      font-size: 11px;
-      border: 1px solid rgba(255,255,255,.16);
-      padding: 4px 7px;
-      border-radius: 10px;
-      background: rgba(0,0,0,.20);
-      color: rgba(255,255,255,.78);
+    .badge strong{ color: rgba(255,255,255,.92); font-weight: 800; }
+
+    .fineprint{
+      font-size: 12px; color: rgba(255,255,255,.50);
+      line-height: 1.35;
+      margin-top: 10px;
+      max-width: 84ch;
     }
 
-    .tri{
-      display:grid;
-      grid-template-columns: 1fr .62fr 1fr;
-      gap: 12px;
-      align-items: stretch;
-    }
-    .panel{
-      border-radius: 18px;
+    /* Hero Visual */
+    .hero-visual-wrap{ margin-top: 22px; }
+    .hero-visual{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
+      box-shadow: var(--shadow);
       overflow:hidden;
-      box-shadow: var(--shadow2);
       position:relative;
     }
-    .panel header{
-      position:static;
-      background: transparent;
-      backdrop-filter: none;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      padding: 10px 12px;
-      display:flex; align-items:center; justify-content:space-between;
-    }
-    .panel header .title{
-      font-size: 12px;
-      color: rgba(255,255,255,.82);
-      display:flex; align-items:center; gap:8px;
-    }
-    .panel header .meta{
-      font-size: 11px;
-      color: rgba(255,255,255,.55);
-    }
-
-    /* Fake spreadsheet */
-    .sheet{
-      padding: 10px 12px 14px;
-      display:grid;
-      gap: 10px;
-    }
-    .tabs{
-      display:flex; gap:6px; flex-wrap:wrap;
-    }
-    .tab{
-      font-size: 10px;
-      padding: 5px 8px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      color: rgba(255,255,255,.68);
-    }
-    .tab.active{
-      background: rgba(34,197,94,.16);
-      border-color: rgba(34,197,94,.22);
-      color: rgba(255,255,255,.90);
-    }
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 6px;
-    }
-    .cell{
-      height: 16px;
-      border-radius: 6px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-      position:relative;
-      overflow:hidden;
-    }
-    .cell.input{ background: rgba(6,182,212,.12); border-color: rgba(6,182,212,.18); }
-    .cell.assump{ background: rgba(124,58,237,.12); border-color: rgba(124,58,237,.18); }
-    .cell.output{ background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.18); }
-    .cell.calc{ background: rgba(249,115,22,.12); border-color: rgba(249,115,22,.18); }
-    .cell::after{
-      content:"";
-      position:absolute; inset:-40% -30%;
-      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.18) 45%, transparent 62%);
-      transform: translateX(-40%) rotate(12deg);
-      opacity: 0;
-      animation: shine 4.6s ease-in-out infinite;
-    }
-    .cell:nth-child(3n)::after{ animation-delay: .6s; }
-    .cell:nth-child(4n)::after{ animation-delay: 1.1s; }
-    @keyframes shine{
-      0%{ opacity:0; transform: translateX(-45%) rotate(12deg); }
-      22%{ opacity:.25; }
-      40%{ opacity:.14; }
-      100%{ opacity:0; transform: translateX(45%) rotate(12deg); }
-    }
-
-    /* Middle conversion spine */
-    .spine{
-      padding: 12px;
-      display:flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 10px;
-    }
-    .step{
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      padding: 10px 10px;
-      display:flex; align-items:flex-start; gap:10px;
-      position:relative;
-      overflow:hidden;
-    }
-    .step::before{
+    .hero-visual::before{
       content:"";
       position:absolute; inset:-2px;
-      background: linear-gradient(90deg, rgba(34,197,94,.18), rgba(6,182,212,.12), rgba(124,58,237,.12));
-      opacity:.22;
+      background: radial-gradient(circle at 30% 15%, rgba(124,58,237,.30), transparent 55%),
+                  radial-gradient(circle at 75% 20%, rgba(34,197,94,.20), transparent 55%),
+                  radial-gradient(circle at 50% 95%, rgba(6,182,212,.14), transparent 60%);
+      opacity:.85;
       z-index:0;
     }
-    .step > *{ position:relative; z-index:1; }
-    .step .num{
-      width: 26px; height: 26px; border-radius: 10px;
-      display:grid; place-items:center;
-      font-size: 12px;
-      color: rgba(7,9,20,.90);
-      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(6,182,212,.95));
-      border: 1px solid rgba(255,255,255,.18);
-      flex:0 0 auto;
-    }
-    .step b{ font-size: 12px; }
-    .step p{ margin: 2px 0 0; font-size: 11px; color: rgba(255,255,255,.62); line-height: 1.35; }
-
-    .warn{
-      display:flex; gap:8px; flex-wrap:wrap;
-      margin-top: 6px;
-    }
-    .chip{
-      font-size: 10px;
-      padding: 5px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-      color: rgba(255,255,255,.68);
-      white-space:nowrap;
-    }
-    .chip.orange{ border-color: rgba(249,115,22,.22); background: rgba(249,115,22,.10); }
-    .chip.cyan{ border-color: rgba(6,182,212,.22); background: rgba(6,182,212,.10); }
-
-    /* Right "app" */
-    .app{
-      padding: 10px 12px 14px;
-      display:grid;
-      gap: 10px;
-    }
-    .app-layout{
-      display:grid;
-      grid-template-columns: 1fr 1.25fr;
-      gap: 10px;
-      align-items:start;
-    }
-    .sidebar{
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      padding: 10px;
-      display:grid;
-      gap: 8px;
-    }
-    .field{
-      display:flex; align-items:center; justify-content:space-between;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.16);
-      padding: 8px 8px;
-      font-size: 11px;
-      color: rgba(255,255,255,.76);
-    }
-    .field span{ color: rgba(255,255,255,.58); font-size: 10px; }
-    .form{
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      padding: 10px;
-      display:grid;
-      gap: 8px;
-    }
-    .row{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 8px;
-    }
-    .inputbox{
-      height: 28px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.16);
+    .hero-visual img{
+      display:block;
+      width:100%;
+      height:auto;
       position:relative;
-      overflow:hidden;
+      z-index:1;
     }
-    .inputbox::after{
-      content:"";
-      position:absolute; inset: 0;
-      background: linear-gradient(90deg, rgba(34,197,94,.0), rgba(34,197,94,.14), rgba(34,197,94,.0));
-      transform: translateX(-60%);
-      animation: sweep 3.8s ease-in-out infinite;
-      opacity:.65;
+    .hero-visual-caption{
+      padding: 12px 14px 14px;
+      position:relative;
+      z-index:2;
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.18);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
-    @keyframes sweep{
-      0%{ transform: translateX(-70%); opacity:0; }
-      18%{ opacity:.45; }
-      45%{ opacity:.18; }
-      100%{ transform: translateX(70%); opacity:0; }
-    }
-    .checks{
-      display:flex; gap:8px; flex-wrap:wrap;
-    }
-    .ok{
-      font-size: 10px;
-      padding: 5px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(34,197,94,.22);
-      background: rgba(34,197,94,.10);
-      color: rgba(255,255,255,.78);
-    }
+    .hero-visual-caption b{ font-size: 13px; }
+    .hero-visual-caption span{ color: rgba(255,255,255,.60); font-size: 13px; line-height: 1.45; }
 
-    /* Sections */
+    /* Section titles */
     .section-title{
       font-size: 13px;
       color: rgba(255,255,255,.64);
@@ -533,7 +299,7 @@
     .sub{
       color: var(--muted);
       line-height: 1.6;
-      max-width: 72ch;
+      max-width: 76ch;
       margin: 0;
       font-size: 16px;
     }
@@ -597,7 +363,49 @@
     .list li{ margin: 8px 0; line-height: 1.55; }
     .list b{ color: rgba(255,255,255,.90); }
 
-    /* Example scenarios */
+    /* Screenshots */
+    .shots{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+      align-items: stretch;
+    }
+    .shot{
+      grid-column: span 6;
+      border-radius: var(--radius);
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow2);
+      position:relative;
+    }
+    .shot img{ width:100%; height:auto; display:block; }
+    .shot .cap{
+      padding: 12px 14px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: rgba(255,255,255,.72);
+      font-size: 13px;
+      line-height: 1.45;
+      background: rgba(0,0,0,.16);
+    }
+    .shot .cap b{ color: rgba(255,255,255,.92); }
+
+    .shot.full{ grid-column: span 12; }
+
+    /* Video */
+    .video{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      margin-top: 18px;
+    }
+    .video video{ width:100%; height:auto; display:block; }
+    .video .cap{ padding: 12px 14px; border-top: 1px solid rgba(255,255,255,.08); color: rgba(255,255,255,.65); font-size: 13px; }
+
+    /* Examples */
     .examples{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -625,13 +433,9 @@
     }
     .example h3{ margin: 0 0 8px; font-size: 16px; }
     .example p{ margin: 0 0 10px; color: var(--muted2); line-height: 1.55; font-size: 14px; }
-    .kv{
-      display:grid; gap: 8px;
-      font-size: 13px;
-      color: rgba(255,255,255,.75);
-    }
+    .kv{ display:grid; gap: 8px; font-size: 13px; color: rgba(255,255,255,.75); }
     .kv div{ display:flex; gap:8px; }
-    .kv span{ color: rgba(255,255,255,.54); min-width: 76px; }
+    .kv span{ color: rgba(255,255,255,.54); min-width: 80px; }
 
     /* CTA panel */
     .cta{
@@ -735,14 +539,21 @@
 
     /* Responsive */
     @media (max-width: 980px){
-      .hero-grid{ grid-template-columns: 1fr; }
-      .tri{ grid-template-columns: 1fr; }
+      nav ul{ display:none; }
+      .nav-actions{ min-width: auto; }
       .cards{ grid-template-columns: 1fr; }
       .two-col{ grid-template-columns: 1fr; }
       .examples{ grid-template-columns: 1fr; }
       .cta-inner{ grid-template-columns: 1fr; }
-      nav ul{ display:none; }
-      .nav-actions{ min-width: auto; }
+      .shots{ grid-template-columns: repeat(12, 1fr); }
+      .shot{ grid-column: span 12; }
+      .brand{ min-width: auto; }
+      .brand-logo{ height: 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .grid-bg{ animation:none; }
+      .reveal{ opacity:1; transform:none; }
     }
   </style>
 </head>
@@ -755,11 +566,7 @@
     <div class="container">
       <div class="nav">
         <a class="brand" href="#top" aria-label="GridOps.app home">
-          <div class="logo" aria-hidden="true"></div>
-          <div>
-            <b>GridOps.app</b>
-            <span>Convert spreadsheets into ops.</span>
-          </div>
+          <img class="brand-logo" src="assets/logo-dark.png" alt="GridOps.app" />
         </a>
 
         <nav aria-label="Primary">
@@ -767,6 +574,7 @@
             <li><a href="#what">What it does</a></li>
             <li><a href="#how">How it works</a></li>
             <li><a href="#use-cases">Use cases</a></li>
+            <li><a href="#product">Product</a></li>
             <li><a href="#examples">Examples</a></li>
             <li><a href="#faq">FAQ</a></li>
           </ul>
@@ -781,191 +589,66 @@
   </header>
 
   <main id="top">
-    <!-- HERO -->
+    <!-- HERO (stacked) -->
     <section class="hero">
       <div class="container">
-        <div class="hero-grid">
-          <div class="reveal">
-            <div class="pill"><span class="dot" aria-hidden="true"></span> Convert, don’t rebuild</div>
-            <h1>Turn Excel planning models into deployable apps. Fast.</h1>
-            <p class="lead">
-              GridOps extracts structure and logic from real-world spreadsheets, helps you map it to dimensions,
-              and generates a deployable model + input forms you can iterate on.
-            </p>
+        <div class="hero-copy reveal">
+          <div class="pill"><span class="dot" aria-hidden="true"></span> Convert, don’t rebuild</div>
+          <h1>Turn Excel planning models into deployable apps. Fast.</h1>
+          <p class="lead">
+            GridOps extracts structure and logic from real-world spreadsheets, helps you map it to dimensions,
+            and generates a deployable model + input forms you can iterate on.
+          </p>
 
-            <div class="hero-points">
-              <div class="point">
-                <div class="icon" aria-hidden="true">⚡</div>
-                <div>
-                  <b>Stop hand-rebuilding models</b>
-                  <p>Keep the spreadsheet logic. Drop the fragile links, forks, and “v_final_final.xlsx”.</p>
-                </div>
-              </div>
-              <div class="point">
-                <div class="icon" aria-hidden="true">🧭</div>
-                <div>
-                  <b>Guided mapping, not guesswork</b>
-                  <p>Entity / Period / Scenario / Drivers → explicit, consistent, repeatable.</p>
-                </div>
-              </div>
-              <div class="point">
-                <div class="icon" aria-hidden="true">📦</div>
-                <div>
-                  <b>Get a build package</b>
-                  <p>Model structure + input forms + validations (not a screenshot or a PDF export).</p>
-                </div>
+          <div class="hero-points">
+            <div class="point">
+              <div class="icon" aria-hidden="true">⚡</div>
+              <div>
+                <b>Stop hand-rebuilding models</b>
+                <p>Keep the spreadsheet logic. Drop the fragile links, forks, and “v_final_final.xlsx”.</p>
               </div>
             </div>
-
-            <div class="hero-actions">
-              <a class="btn primary" href="#sample">Get a sample conversion</a>
-              <a class="btn" href="#how">See how it works</a>
-              <span class="badge" title="Internal benchmark">
-                <span aria-hidden="true">⬆︎</span>
-                <strong>Up to 50–100×</strong> less build effort*
-              </span>
+            <div class="point">
+              <div class="icon" aria-hidden="true">🧭</div>
+              <div>
+                <b>Guided mapping, not guesswork</b>
+                <p>Entity / Period / Scenario / Drivers → explicit, consistent, repeatable.</p>
+              </div>
             </div>
-
-            <p class="fineprint">
-              * “Up to 50–100×” is based on internal testing on complex enterprise Excel models. Results vary by model complexity and target environment.
-            </p>
+            <div class="point">
+              <div class="icon" aria-hidden="true">📦</div>
+              <div>
+                <b>Get a build package</b>
+                <p>Model structure + input forms + validations (not a screenshot or a PDF export).</p>
+              </div>
+            </div>
           </div>
 
-          <!-- HERO OBJECT (Before → GridOps → App) -->
-          <div class="hero-object reveal" aria-label="Product preview">
-            <div class="hero-object-inner">
-              <div class="hero-object-top">
-                <div class="badge">
-                  <span aria-hidden="true">🧩</span> <strong>Before → After</strong> model conversion
-                </div>
-                <div class="kbd">Upload → Map → Generate</div>
+          <div class="hero-actions">
+            <a class="btn primary" href="#sample">Get a sample conversion</a>
+            <a class="btn" href="#how">See how it works</a>
+            <span class="badge" title="Internal benchmark">
+              <span aria-hidden="true">⬆︎</span>
+              <strong>Up to 50–100×</strong> less build effort*
+            </span>
+          </div>
+
+          <p class="fineprint">
+            * “Up to 50–100×” is based on internal testing on complex enterprise Excel models. Results vary by model complexity and target environment.
+          </p>
+        </div>
+
+        <div class="hero-visual-wrap reveal">
+          <div class="hero-visual" aria-label="Excel to GridOps conversion preview">
+            <img src="assets/hero.webp" alt="Excel workbook → GridOps mapping → deployable app" loading="eager" />
+            <div class="hero-visual-caption">
+              <div>
+                <b>What you’re seeing</b><br />
+                <span>Real screenshots from the demo: Excel → mapping workspace → deployed app-like views.</span>
               </div>
-
-              <div class="tri">
-                <!-- Left: Excel -->
-                <div class="panel">
-                  <header>
-                    <div class="title">📊 Excel workbook</div>
-                    <div class="meta">FY26_Budget_v7.xlsx</div>
-                  </header>
-                  <div class="sheet">
-                    <div class="tabs" aria-hidden="true">
-                      <span class="tab active">Inputs</span>
-                      <span class="tab">Assumptions</span>
-                      <span class="tab">Calc</span>
-                      <span class="tab">Output</span>
-                      <span class="tab">Lookups</span>
-                    </div>
-
-                    <div class="grid" aria-hidden="true">
-                      <!-- A believable mix of blocks -->
-                      <div class="cell input"></div><div class="cell input"></div><div class="cell input"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-                      <div class="cell input"></div><div class="cell input"></div><div class="cell input"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-                      <div class="cell assump"></div><div class="cell assump"></div><div class="cell assump"></div><div class="cell assump"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-                      <div class="cell calc"></div><div class="cell calc"></div><div class="cell calc"></div><div class="cell calc"></div><div class="cell calc"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-                      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell output"></div><div class="cell output"></div><div class="cell output"></div><div class="cell output"></div>
-                      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell output"></div><div class="cell output"></div><div class="cell output"></div><div class="cell output"></div>
-                    </div>
-
-                    <div class="warn" aria-hidden="true">
-                      <span class="chip cyan">inputs detected</span>
-                      <span class="chip">scenarios found</span>
-                      <span class="chip orange">inconsistent ranges</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Middle: GridOps -->
-                <div class="panel">
-                  <header>
-                    <div class="title">🧠 GridOps</div>
-                    <div class="meta">conversion spine</div>
-                  </header>
-                  <div class="spine">
-                    <div class="step">
-                      <div class="num">1</div>
-                      <div>
-                        <b>Extract</b>
-                        <p>Identify blocks, time series, assumptions, outputs.</p>
-                      </div>
-                    </div>
-                    <div class="step">
-                      <div class="num">2</div>
-                      <div>
-                        <b>Map</b>
-                        <p>Entity / Period / Scenario / Drivers → explicit dims.</p>
-                      </div>
-                    </div>
-                    <div class="step">
-                      <div class="num">3</div>
-                      <div>
-                        <b>Validate</b>
-                        <p>Flag risks before they become bugs.</p>
-                        <div class="warn" aria-hidden="true">
-                          <span class="chip orange">circular ref flagged</span>
-                          <span class="chip">hardcoded constants</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="step">
-                      <div class="num">4</div>
-                      <div>
-                        <b>Generate</b>
-                        <p>Produce a deployable model + input forms package.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Right: App -->
-                <div class="panel">
-                  <header>
-                    <div class="title">🗂️ Planning app</div>
-                    <div class="meta">model + forms</div>
-                  </header>
-                  <div class="app">
-                    <div class="app-layout">
-                      <div class="sidebar" aria-hidden="true">
-                        <div class="field">Entity <span>Group / BU</span></div>
-                        <div class="field">Period <span>Monthly</span></div>
-                        <div class="field">Scenario <span>Base / Upside</span></div>
-                        <div class="field">Version <span>FY26</span></div>
-                      </div>
-
-                      <div class="form" aria-hidden="true">
-                        <div class="row">
-                          <div class="inputbox"></div>
-                          <div class="inputbox"></div>
-                        </div>
-                        <div class="row">
-                          <div class="inputbox"></div>
-                          <div class="inputbox"></div>
-                        </div>
-                        <div class="row">
-                          <div class="inputbox"></div>
-                          <div class="inputbox"></div>
-                        </div>
-                        <div class="checks">
-                          <span class="ok">✓ totals check</span>
-                          <span class="ok">✓ missing inputs</span>
-                          <span class="ok">✓ period consistency</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="warn" aria-hidden="true">
-                      <span class="chip cyan">deployable package</span>
-                      <span class="chip">repeatable updates</span>
-                      <span class="chip orange">audit-friendly structure</span>
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <a class="btn" href="#product">See product screenshots</a>
               </div>
-
-              <p class="fineprint" style="margin:12px 2px 0;">
-                Context: the left side is what teams actually maintain (tabs, blocks, scenarios). GridOps makes the mapping explicit,
-                adds validation, and generates a build artifact you can ship and update.
-              </p>
             </div>
           </div>
         </div>
@@ -978,28 +661,28 @@
         <p class="section-title">Why it exists</p>
         <h2>Excel is where planning starts. And where it breaks.</h2>
         <p class="sub">
-          Your team spends weeks rebuilding what already works in a spreadsheet. Not because Excel is wrong,
-          but because there's no way to extract what's inside it and ship it as something maintainable.
+          Spreadsheets are flexible, but large planning models become fragile and expensive.
+          The problem isn’t “Excel vs software” — it’s that delivery doesn’t scale when every model is rebuilt by hand.
         </p>
 
         <div class="cards">
           <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🧯</div><b>A small edit breaks three tabs</b></div>
-            <p>You update one assumption and spend the rest of the day fixing cascading formula errors across linked sheets.</p>
+            <div class="mini"><div class="mark" aria-hidden="true">🧯</div><b>Every change becomes a mini re-implementation</b></div>
+            <p>Small edits cascade into broken links, retesting, and new “final” versions.</p>
           </div>
           <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🧠</div><b>Only one person understands it</b></div>
-            <p>The person who built the model moved to another team. Now nobody knows why row 47 is hardcoded or what "Adj_v2" means.</p>
+            <div class="mini"><div class="mark" aria-hidden="true">🧠</div><b>Logic lives in people</b></div>
+            <p>When the spreadsheet owner leaves, the model becomes a black box.</p>
           </div>
           <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🪵</div><b>Audit prep takes weeks</b></div>
-            <p>Finance asks "what changed since Q3?" and someone manually diffs two spreadsheets side by side.</p>
+            <div class="mini"><div class="mark" aria-hidden="true">🪵</div><b>Governance is painful</b></div>
+            <p>Audits, approvals, and “what changed?” turn into manual detective work.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SOLUTION / HOW -->
+    <!-- HOW -->
     <section id="how">
       <div class="container reveal">
         <p class="section-title">How it works</p>
@@ -1033,7 +716,7 @@
 
         <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
           <a class="btn primary" href="#sample">Get a sample conversion</a>
-          <a class="btn" href="#use-cases">See concrete use cases</a>
+          <a class="btn" href="#product">See product</a>
           <span class="badge" title="Internal benchmark">
             <span aria-hidden="true">📉</span> Build effort can drop <strong>dramatically</strong>*
           </span>
@@ -1050,110 +733,127 @@
       <div class="container reveal">
         <p class="section-title">Use cases</p>
         <h2>Best for “big spreadsheet” planning.</h2>
-        <p class="sub">From annual budgets to workforce plans — if it lives in a spreadsheet and matters to the business, it converts.</p>
+        <p class="sub">Concrete examples of what teams convert with GridOps.</p>
 
         <div class="cards">
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">📈</div><b>Budgeting & Forecasting (FP&A)</b></div>
-            <p>
-              10–30 tab workbooks with monthly horizons, multiple scenarios, and entity rollups.
-              GridOps produces a structured model with driver input forms and consistent, validated outputs.
-            </p>
+            <p>Typical Excel: 10–30 tabs, monthly horizon, scenarios, rollups. Output: Entity/Period/Scenario model + driver input form + consistent outputs.</p>
           </div>
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">👥</div><b>Workforce planning</b></div>
-            <p>
-              Headcount, compensation assumptions, and allocations by org unit.
-              Each department gets its own input form with allocation logic and consolidated totals built in.
-            </p>
+            <p>Typical Excel: headcount, comp assumptions, allocations by org. Output: controlled inputs per owner + allocation logic + consolidated totals.</p>
           </div>
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">🧾</div><b>Sales & revenue planning</b></div>
-            <p>
-              Conversion rates, ramp curves, and scenario toggles across product lines.
-              Get a clean assumptions form, side-by-side scenario comparison, and standardized driver tables.
-            </p>
+            <p>Typical Excel: conversion rates, ramp curves, scenarios. Output: assumptions form + scenario compare + standardized driver tables.</p>
           </div>
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">🧮</div><b>Cost allocation / ABC models</b></div>
-            <p>
-              Multi-step allocations with fragile cross-tab links that break every cycle.
-              Replaced with explicit driver tables and automated balance/exception checks.
-            </p>
+            <p>Typical Excel: multi-step allocations with fragile cross-tab links. Output: explicit driver tables + checks (balances, totals, exceptions).</p>
           </div>
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">🏗️</div><b>CapEx / project planning</b></div>
-            <p>
-              Project lists, phasing schedules, approval workflows, and rollups.
-              Converted into structured project inputs with phasing rules and consolidated plans by period and entity.
-            </p>
+            <p>Typical Excel: project lists, phasing, approvals, rollups. Output: project inputs + phasing rules + consolidated plan by period/entity.</p>
           </div>
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">🧩</div><b>Partner / delivery teams</b></div>
-            <p>
-              If you implement planning solutions for clients, GridOps turns each engagement
-              into a repeatable playbook — standardized mapping instead of custom rebuilds every time.
-            </p>
+            <p>Turn spreadsheet implementation into a repeatable delivery playbook. Less custom rebuild, more standardized mapping + output packages.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- EXAMPLES (Illustrative, not customer claims) -->
+    <!-- PRODUCT -->
+    <section id="product">
+      <div class="container reveal">
+        <p class="section-title">Product</p>
+        <h2>From demo: Excel → mapping workspace → deployed views.</h2>
+        <p class="sub">Screenshots below are from the current demo flow.</p>
+
+        <div class="shots">
+          <figure class="shot">
+            <img src="assets/demo-excel.webp" alt="Excel planning workbook" loading="lazy" />
+            <figcaption class="cap"><b>Before:</b> real-world Excel with tabs, blocks, scenarios, and rollups.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <img src="assets/demo-mapping.webp" alt="GridOps mapping workspace" loading="lazy" />
+            <figcaption class="cap"><b>Map:</b> make dimensions explicit (region/entity, month/period, scenario, measures).</figcaption>
+          </figure>
+
+          <figure class="shot full">
+            <img src="assets/demo-formula.webp" alt="GridOps formula and explain view" loading="lazy" />
+            <figcaption class="cap"><b>Understand:</b> inspect formulas/logic and surface issues early (before deployment).</figcaption>
+          </figure>
+
+          <figure class="shot full">
+            <img src="assets/demo-app.webp" alt="Deployed app-like data entry view" loading="lazy" />
+            <figcaption class="cap"><b>After:</b> app-like, controlled data entry experience built from the spreadsheet model.</figcaption>
+          </figure>
+        </div>
+
+        <div class="video" aria-label="Product demo video" style="margin-top: 18px;">
+          <video controls preload="metadata" poster="assets/hero.webp">
+            <source src="assets/demo.mp4" type="video/mp4" />
+          </video>
+          <div class="cap">Watch a quick walkthrough of the conversion flow.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXAMPLES -->
     <section id="examples">
       <div class="container reveal">
         <p class="section-title">Examples</p>
-        <h2>What a conversion looks like.</h2>
+        <h2>Common spreadsheet-to-app conversions.</h2>
         <p class="sub">
-          Real-world conversions from teams that stopped rebuilding models by hand.
+          Three patterns GridOps converts especially well — budgeting, revenue planning, and workforce planning.
         </p>
 
         <div class="examples">
           <div class="example">
-            <span class="tag">FP&A</span>
-            <h3>Manufacturing budget model — 18 sheets, 4 scenarios</h3>
-            <p>Monthly budget with entity rollups and heavy cross-tab lookups. Previously took 6 weeks to rebuild each fiscal year.</p>
+            <span class="tag">Budgeting</span>
+            <h3>Multi-entity FP&amp;A budget workbook</h3>
+            <p>Monthly plan with scenarios, rollups, and heavy lookups across tabs.</p>
             <div class="kv">
-              <div><span>Input:</span> 18-tab workbook with drivers, assumptions, and rollups</div>
-              <div><span>Before:</span> every edit required formula surgery and full retesting</div>
-              <div><span>After:</span> mapped dimensions + driver input form + automated validations</div>
-              <div><span>Result:</span> quarterly updates now run without rebuilding from scratch</div>
+              <div><span>Typical:</span> 10–30 tabs, drivers + outputs, manual checks</div>
+              <div><span>GridOps:</span> explicit dims + driver forms + validations</div>
+              <div><span>Result:</span> repeatable updates and cleaner review cycles</div>
             </div>
           </div>
 
           <div class="example">
             <span class="tag">Revenue</span>
-            <h3>SaaS bookings-to-revenue waterfall</h3>
-            <p>Bookings → revenue waterfall with ramp curves, churn/expansion logic, and scenario toggles across 3 product lines.</p>
+            <h3>Bookings → revenue plan</h3>
+            <p>Ramp curves, churn/expansion, scenario switches, and time-based logic.</p>
             <div class="kv">
-              <div><span>Input:</span> assumption blocks + 36-month time series</div>
-              <div><span>Before:</span> finance team rebuilt the spreadsheet every quarter</div>
-              <div><span>After:</span> assumptions form + side-by-side scenario comparison</div>
-              <div><span>Result:</span> one model carries forward; new quarters are config changes</div>
+              <div><span>Typical:</span> assumptions hidden in cells, multiple forks per quarter</div>
+              <div><span>GridOps:</span> assumptions form + scenario compare + checks</div>
+              <div><span>Result:</span> consistent logic across scenarios and versions</div>
             </div>
           </div>
 
           <div class="example">
-            <span class="tag">HR / Ops</span>
-            <h3>Workforce planning + cost allocations</h3>
-            <p>Headcount, compensation, start dates, and cost allocations across 12 departments maintained by 5 different owners.</p>
+            <span class="tag">Workforce</span>
+            <h3>Headcount + allocations model</h3>
+            <p>Comp assumptions, start dates, allocations, and consolidation across owners.</p>
             <div class="kv">
-              <div><span>Input:</span> mixed tables + manual consolidation from multiple files</div>
-              <div><span>Before:</span> broken links after every update, unclear who owns what</div>
-              <div><span>After:</span> owner-specific input forms + automated balance checks</div>
-              <div><span>Result:</span> clean handoffs between departments, audit-ready output</div>
+              <div><span>Typical:</span> broken links, unclear ownership, slow consolidation</div>
+              <div><span>GridOps:</span> owner-specific inputs + allocations + totals checks</div>
+              <div><span>Result:</span> cleaner handoffs and more reliable rollups</div>
             </div>
           </div>
         </div>
 
         <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
           <a class="btn primary" href="#sample">Get a sample conversion</a>
-          <a class="btn" href="#faq">Read the FAQ</a>
+          <a class="btn" href="#product">See the product</a>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
+<!-- FAQ -->
     <section id="faq">
       <div class="container reveal">
         <p class="section-title">FAQ</p>
@@ -1161,27 +861,22 @@
 
         <details>
           <summary>Does GridOps replace Excel?</summary>
-          <p>No. Excel stays the source model. GridOps helps convert it into an explicit, governed model build you can deploy and update.</p>
+          <p>No. Excel stays the source. GridOps converts it into explicit structure + deployable artifacts you can iterate on.</p>
         </details>
 
         <details>
           <summary>What spreadsheets work best?</summary>
-          <p>Planning models with clear structure — time series, drivers, assumptions blocks, rollups, scenarios. Send us one and we'll tell you within a day what converts cleanly and what needs adjustment.</p>
+          <p>Planning models with structure: time series, drivers, assumptions blocks, rollups, scenarios. We can assess your workbook quickly and tell you what converts cleanly.</p>
         </details>
 
         <details>
-          <summary>Do you preserve every Excel feature (macros, VBA, etc.)?</summary>
-          <p>GridOps extracts the model's structure and calculation logic — dimensions, drivers, assumptions, and outputs. VBA macros and Excel-specific UI features aren't carried over directly, but the underlying business logic they implement is captured and mapped to the generated model.</p>
+          <summary>Do you preserve every Excel feature (macros, everything)?</summary>
+          <p>GridOps extracts structure and logic. Some Excel-specific constructs may require adaptation depending on your conventions and target environment.</p>
         </details>
 
         <details>
           <summary>How fast is it?</summary>
-          <p>A typical 15–20 tab budget model converts in days, not months. Complex models with heavy cross-references take longer, but even those see up to <b>50–100×</b> less build effort compared to a manual rebuild.</p>
-        </details>
-
-        <details>
-          <summary>Is my data secure?</summary>
-          <p>Yes. We can sign an NDA before you share anything. Your workbooks are processed in isolated environments and are not used for training or shared with third parties.</p>
+          <p>It depends on the workbook. Internal testing on complex enterprise models shows up to <b>50–100×</b> less build effort vs manual rebuild — results vary.</p>
         </details>
       </div>
     </section>
@@ -1194,15 +889,11 @@
             <div>
               <p class="section-title" style="margin-bottom:8px;">Try it on your spreadsheet</p>
               <h2>Send one workbook. We’ll show the conversion.</h2>
-              <p>
-                You’ll get a clear answer: what converts cleanly, what needs adjustment, and what the generated output looks like.
-              </p>
-              <p class="fineprint" style="margin-top:10px;">
-                We don’t need your entire planning universe to start — one “big” spreadsheet is enough.
-              </p>
+              <p>You’ll get a clear answer: what converts cleanly, what needs adjustment, and what the output looks like.</p>
+              <p class="fineprint" style="margin-top:10px;">We don’t need your entire planning universe to start — one “big” spreadsheet is enough.</p>
             </div>
 
-            <form onsubmit="return fakeSubmit(event)" aria-label="Sample conversion request">
+            <form id="leadForm" aria-label="Sample conversion request">
               <div class="row2">
                 <div>
                   <label for="name">Name</label>
@@ -1227,21 +918,15 @@
           </div>
         </div>
 
-        <p class="fineprint" style="margin-top:12px;">
-          We typically respond within one business day. Your data stays confidential — we can sign an NDA before you share anything.
-        </p>
+        <p class="fineprint" style="margin-top:12px;">We typically respond within 1–2 business days. If you share a workbook, we treat it as confidential.</p>
       </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
       <div class="container">
         <div class="foot">
           <div>
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
-              <div class="logo" aria-hidden="true" style="width:26px; height:26px; border-radius:10px;"></div>
-              <b style="color: rgba(255,255,255,.80);">GridOps.app</b>
-            </div>
+            <img src="assets/logo-dark.png" alt="GridOps.app" style="height:22px; width:auto; display:block; margin-bottom:8px;" />
             <div>Convert spreadsheets into ops — model + forms + validations.</div>
           </div>
 
@@ -1249,15 +934,13 @@
             <a href="#what">What it does</a>
             <a href="#how">How it works</a>
             <a href="#use-cases">Use cases</a>
-            <a href="#examples">Examples</a>
+            <a href="#product">Product</a>
             <a href="#faq">FAQ</a>
           </div>
 
-          <div style="max-width: 420px;">
+          <div style="max-width: 440px;">
             <div style="margin-bottom:6px;"><b style="color: rgba(255,255,255,.72);">Disclaimer</b></div>
-            <div>
-              “Up to 50–100×” reflects internal testing on complex enterprise Excel models. Results vary by model complexity and target environment.
-            </div>
+            <div>“Up to 50–100×” reflects internal testing on complex enterprise Excel models. Results vary by model complexity and target environment.</div>
           </div>
         </div>
 
@@ -1296,21 +979,28 @@
 
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // Form submit handler
-    function fakeSubmit(e){
-      e.preventDefault();
-      const btn = e.target.querySelector('button[type="submit"]');
-      const hint = document.getElementById('formHint');
-      btn.disabled = true;
-      btn.textContent = "Requested ✓";
-      hint.textContent = "Thanks — we’ll reach out with next steps.";
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.textContent = "Request sample conversion";
-        hint.textContent = "We’ll reply with next steps and a quick assessment.";
-        e.target.reset();
-      }, 3500);
-      return false;
+    // Lead form: opens a pre-filled email (static-site friendly)
+    const CONTACT_EMAIL = "hello@gridops.app";
+    const form = document.getElementById("leadForm");
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const note = document.getElementById("note").value.trim();
+        const subject = encodeURIComponent("GridOps — sample conversion request");
+        const body = encodeURIComponent(
+          `Name: ${name}
+Work email: ${email}
+
+Model description:
+${note || "(not provided)"}
+`
+        );
+        window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+        const hint = document.getElementById("formHint");
+        if (hint) hint.textContent = "Your email draft is ready — press Send to request a sample conversion.";
+      });
     }
   </script>
 </body>
