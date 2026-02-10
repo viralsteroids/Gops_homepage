@@ -1,0 +1,460 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GridOps — The Spreadsheet-to-App Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-page: #020305;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-surface: rgba(255, 255, 255, 0.03);
+            --accent-glow: rgba(120, 119, 198, 0.3);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-page);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Subtle Grid Background */
+        .bg-grid {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+
+        /* Text Gradients & Glows */
+        .text-gradient {
+            background: linear-gradient(to bottom right, #ffffff 30%, #a5a5a5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .shine-effect {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+        }
+        
+        .btn-primary:hover .shine-effect {
+            left: 200%;
+            transition: 0.7s ease-in-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020305; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        /* Hide number inputs arrows */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
+</head>
+<body class="text-slate-400 selection:bg-indigo-500/30 selection:text-indigo-200 overflow-x-hidden">
+
+    <!-- Ambient Background Glow -->
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-indigo-900/20 rounded-[100%] blur-[120px] -z-10 pointer-events-none opacity-50"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 border-b border-white/[0.08] bg-[#020305]/80 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-6 h-6 rounded bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+                    <iconify-icon icon="solar:grid-linear" width="16"></iconify-icon>
+                </div>
+                <span class="text-white font-medium tracking-tight text-sm group-hover:opacity-80 transition-opacity">GridOps</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 text-xs font-medium tracking-wide">
+                <a href="#features" class="hover:text-white transition-colors">Features</a>
+                <a href="#how-it-works" class="hover:text-white transition-colors">Methodology</a>
+                <a href="#pricing" class="hover:text-white transition-colors">Enterprise</a>
+                <a href="https://docs.gridops.app" class="hover:text-white transition-colors">Docs</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-xs font-medium hover:text-white transition-colors hidden sm:block">Log in</a>
+                <a href="#" class="relative overflow-hidden btn-primary h-8 px-4 rounded-full bg-white text-black text-xs font-semibold flex items-center gap-2 hover:bg-gray-200 transition-colors">
+                    <span class="relative z-10">Start Building</span>
+                    <iconify-icon icon="solar:arrow-right-linear" width="14" class="relative z-10"></iconify-icon>
+                    <div class="shine-effect"></div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+        <div class="absolute inset-0 bg-grid -z-10"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-[10px] font-medium tracking-wide mb-8 animate-fade-in-up">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                </span>
+                DATA INTEGRITY FOR FINANCE
+            </div>
+
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-medium text-white tracking-tight leading-[1.1] mb-6">
+                Spreadsheet logic.<br>
+                <span class="text-gradient">Production-grade application.</span>
+            </h1>
+            
+            <p class="text-sm md:text-lg text-slate-400 max-w-xl mx-auto leading-relaxed mb-10 font-light">
+                GridOps ingests your complex Excel models, extracts the logic, and deploys scalable, type-safe applications. No more broken formulas or version conflicts.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button class="h-10 px-6 rounded-md bg-[#EEEEF0] hover:bg-white text-black text-sm font-medium transition-all shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] flex items-center gap-2">
+                    <iconify-icon icon="solar:rocket-linear" width="18"></iconify-icon>
+                    Deploy Model
+                </button>
+                <button class="h-10 px-6 rounded-md border border-white/10 hover:bg-white/5 text-slate-300 hover:text-white text-sm font-medium transition-all flex items-center gap-2 bg-[#0A0C14]">
+                    <iconify-icon icon="solar:code-file-linear" width="18"></iconify-icon>
+                    View Documentation
+                </button>
+            </div>
+        </div>
+
+        <!-- Hero Visual / Abstract UI -->
+        <div class="mt-20 max-w-5xl mx-auto px-6 relative">
+            <div class="relative rounded-xl border border-white/10 bg-[#0A0C14] shadow-2xl shadow-indigo-500/10 overflow-hidden group">
+                <!-- Mac Header -->
+                <div class="h-8 border-b border-white/10 bg-[#0F1119] flex items-center px-4 gap-2">
+                    <div class="flex gap-1.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                    </div>
+                    <div class="mx-auto text-[10px] font-medium text-slate-500 font-mono">revenue_model_v4.xlsx → app.gridops.io</div>
+                </div>
+
+                <div class="grid md:grid-cols-2 min-h-[400px]">
+                    <!-- Left: Spreadsheet Metaphor -->
+                    <div class="border-r border-white/10 p-6 relative bg-gradient-to-b from-[#0A0C14] to-[#050608]">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-medium text-emerald-400 flex items-center gap-1.5">
+                                <iconify-icon icon="solar:file-excel-linear"></iconify-icon> Source Input
+                            </span>
+                        </div>
+                        
+                        <!-- Fake Grid -->
+                        <div class="grid grid-cols-4 gap-[1px] bg-white/10 border border-white/10 rounded overflow-hidden text-[10px] font-mono text-slate-400">
+                            <!-- Header -->
+                            <div class="bg-white/5 p-2 text-center text-slate-300">A</div>
+                            <div class="bg-white/5 p-2 text-center text-slate-300">B</div>
+                            <div class="bg-white/5 p-2 text-center text-slate-300">C</div>
+                            <div class="bg-white/5 p-2 text-center text-slate-300">D</div>
+                            <!-- Row 1 -->
+                            <div class="bg-[#0A0C14] p-2 border-r border-white/5 text-white">MRR</div>
+                            <div class="bg-[#0A0C14] p-2 border-r border-white/5 text-right">10,500</div>
+                            <div class="bg-[#0A0C14] p-2 border-r border-white/5 text-right">12,100</div>
+                            <div class="bg-[#0A0C14] p-2 text-right">14,200</div>
+                            <!-- Row 2 -->
+                            <div class="bg-[#0A0C14] p-2 border-r border-white/5 text-white">Churn</div>
+                            <div class="bg-[#0A0C14] p-2 border-r border-white/5 text-right text-red-400">2.1%</div>
+                            <div class="bg-[#0A0C14] p-2 border-r border-white/5 text-right text-red-400">1.8%</div>
+                            <div class="bg-[#0A0C14] p-2 text-right text-red-400">1.5%</div>
+                            <!-- Row 3 -->
+                            <div class="bg-[#0A0C14] p-2 border-r border-white/5 text-white">Growth</div>
+                            <div class="bg-[#0A0C14] p-2 border-r border-white/5 text-right bg-indigo-500/20 text-indigo-300">=B2*(1-B3)</div>
+                            <div class="bg-[#0A0C14] p-2 border-r border-white/5 text-right">...</div>
+                            <div class="bg-[#0A0C14] p-2 text-right">...</div>
+                        </div>
+
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+                                <iconify-icon icon="solar:refresh-circle-linear" class="animate-spin-slow"></iconify-icon>
+                                Parsing formulas...
+                            </div>
+                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-indigo-500 w-2/3 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Code/App Metaphor -->
+                    <div class="p-6 bg-[#0B0D15] relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-medium text-indigo-400 flex items-center gap-1.5">
+                                <iconify-icon icon="solar:server-square-linear"></iconify-icon> Generated API
+                            </span>
+                            <div class="flex gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                <span class="text-[10px] text-slate-500 uppercase tracking-wider">Online</span>
+                            </div>
+                        </div>
+
+                        <div class="font-mono text-[11px] leading-relaxed text-slate-400">
+                            <div><span class="text-purple-400">const</span> <span class="text-yellow-200">calculateGrowth</span> = (<span class="text-blue-300">input</span>: <span class="text-emerald-300">ModelInput</span>) =&gt; {</div>
+                            <div class="pl-4"><span class="text-purple-400">return</span> input.mrr * (1 - input.churn);</div>
+                            <div>}</div>
+                            <br>
+                            <div><span class="text-slate-500">// Auto-generated endpoint</span></div>
+                            <div><span class="text-blue-400">POST</span> /api/v1/forecast</div>
+                            <div class="text-white/30 text-[10px] mt-1">{ "mrr": 10500, "churn": 0.021 }</div>
+                            <div class="text-emerald-400/80 text-[10px] mt-1">→ { "growth": 10279.5 }</div>
+                        </div>
+
+                        <!-- Decorational Glow -->
+                        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-600/20 blur-[50px] rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Trusted By (Marquee) -->
+    <section class="py-12 border-y border-white/[0.04]">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p class="text-[10px] uppercase tracking-widest text-slate-500 mb-8 font-medium">Powering models for modern finance teams</p>
+            <div class="flex flex-wrap justify-center gap-x-12 gap-y-8 opacity-40 grayscale mix-blend-screen">
+                <!-- Logos using text for simplicity in this demo, usually SVG -->
+                <span class="text-lg font-bold tracking-tighter">ACME Corp</span>
+                <span class="text-lg font-semibold tracking-tight italic">Starlight</span>
+                <span class="text-lg font-bold tracking-tight">KINETIC</span>
+                <span class="text-lg font-medium tracking-widest">NEXUS</span>
+                <span class="text-lg font-bold tracking-tighter">Vortex</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Props -->
+    <section id="features" class="py-24 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="mb-16">
+                <h2 class="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight">From cells to code.<br><span class="text-slate-500">Without the rewrite.</span></h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+                        <iconify-icon icon="solar:graph-up-linear" width="20"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-medium text-white mb-2">Logic Extraction</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">We parse the dependency graph of your spreadsheet. Inputs, calculations, and outputs are separated automatically.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+                        <iconify-icon icon="solar:shield-check-linear" width="20"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-medium text-white mb-2">Type Safety</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Inputs are strictly typed. If a cell expects a percentage, the generated app rejects arbitrary text strings.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+                        <iconify-icon icon="solar:history-linear" width="20"></iconify-icon>
+                    </div>
+                    <h3 class="text-base font-medium text-white mb-2">Version Control</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Treat your financial models like code. Diff changes, rollback to previous versions, and audit every input.</p>
+                </div>
+            </div>
+
+            <!-- Wide Feature -->
+            <div class="mt-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center gap-12">
+                <div class="flex-1 z-10">
+                    <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-[10px] font-medium tracking-wide mb-6">
+                        AUTOMATED UI
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-medium text-white mb-3">Instant Input Forms</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                        Stop emailing spreadsheets to department heads. GridOps generates a secure, web-based form for data collection that feeds directly into your model logic.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3 text-sm text-slate-300">
+                            <iconify-icon icon="solar:check-circle-linear" class="text-indigo-400"></iconify-icon>
+                            <span>Role-based access control</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-slate-300">
+                            <iconify-icon icon="solar:check-circle-linear" class="text-indigo-400"></iconify-icon>
+                            <span>Real-time validation</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-slate-300">
+                            <iconify-icon icon="solar:check-circle-linear" class="text-indigo-400"></iconify-icon>
+                            <span>Audit logs for every change</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex-1 w-full relative">
+                     <!-- Abstract Form UI -->
+                     <div class="bg-[#0B0D15] rounded-xl border border-white/10 p-6 shadow-2xl relative z-10">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="text-white text-sm font-medium">Q3 Budget Input</h4>
+                            <span class="text-[10px] text-slate-500 bg-white/5 px-2 py-1 rounded">Marketing Dept</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-[10px] text-slate-400 mb-1.5">Campaign Spend</label>
+                                <div class="flex items-center bg-[#020305] border border-white/10 rounded px-3 py-2 text-xs text-white">
+                                    <span class="text-slate-600 mr-2">$</span>
+                                    50,000
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-slate-400 mb-1.5">Expected Conversion Rate</label>
+                                <div class="relative">
+                                    <div class="h-1.5 w-full bg-white/10 rounded-full mb-2">
+                                        <div class="h-full bg-indigo-500 rounded-full" style="width: 45%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-[10px] text-slate-500">
+                                        <span>Conservative (1.2%)</span>
+                                        <span class="text-white">Aggressive (4.5%)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-white/5 flex justify-end">
+                            <button class="bg-white text-black text-xs font-semibold px-4 py-2 rounded hover:bg-slate-200 transition-colors">Submit Forecast</button>
+                        </div>
+                     </div>
+                     <!-- Glow behind -->
+                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-indigo-500/10 blur-[60px] -z-10 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology / Steps -->
+    <section id="how-it-works" class="py-24 border-t border-white/[0.04]">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-2xl font-medium text-white mb-12 text-center tracking-tight">The GridOps Workflow</h2>
+            
+            <div class="relative pl-8 border-l border-white/10 space-y-12">
+                <!-- Step 1 -->
+                <div class="relative">
+                    <div class="absolute -left-[37px] top-0 w-4 h-4 rounded-full bg-[#020305] border border-slate-700 flex items-center justify-center">
+                        <div class="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
+                    </div>
+                    <div class="mb-2 flex items-center gap-3">
+                        <iconify-icon icon="solar:upload-linear" class="text-slate-400" width="20"></iconify-icon>
+                        <h3 class="text-lg font-medium text-white">Upload Workbook</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 max-w-lg">Simply drag and drop your .xlsx file. We support complex formulas, named ranges, and cross-sheet references.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative">
+                    <div class="absolute -left-[37px] top-0 w-4 h-4 rounded-full bg-[#020305] border border-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)] flex items-center justify-center">
+                        <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                    </div>
+                    <div class="mb-2 flex items-center gap-3">
+                        <iconify-icon icon="solar:magic-stick-3-linear" class="text-indigo-400" width="20"></iconify-icon>
+                        <h3 class="text-lg font-medium text-white">Define Schema</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 max-w-lg">Map your input cells and output cells. GridOps automatically detects dimension arrays (e.g., Months, Regions).</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative">
+                    <div class="absolute -left-[37px] top-0 w-4 h-4 rounded-full bg-[#020305] border border-slate-700 flex items-center justify-center">
+                        <div class="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
+                    </div>
+                    <div class="mb-2 flex items-center gap-3">
+                        <iconify-icon icon="solar:code-square-linear" class="text-slate-400" width="20"></iconify-icon>
+                        <h3 class="text-lg font-medium text-white">Deploy App</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 max-w-lg">Get a hosted URL instantly. Invite your team to input data or consume the logic via REST API.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-indigo-900/10 to-[#020305] pointer-events-none"></div>
+        <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-medium text-white mb-6 tracking-tight">Stop running finance on fragile files.</h2>
+            <p class="text-slate-400 mb-10 text-sm md:text-base">Join forward-thinking FP&amp;A teams turning their models into robust software assets.</p>
+            
+            <form class="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
+                <input type="email" placeholder="work@company.com" class="bg-white/5 border border-white/10 text-white px-4 py-2.5 rounded-md text-sm outline-none focus:border-indigo-500 transition-colors w-full">
+                <button class="bg-white text-black font-semibold text-sm px-6 py-2.5 rounded-md hover:bg-slate-200 transition-colors whitespace-nowrap">
+                    Book Demo
+                </button>
+            </form>
+            <p class="text-[10px] text-slate-600 mt-4">No credit card required. Enterprise plans available.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/[0.08] bg-[#020305] pt-16 pb-12">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
+            <div class="col-span-2 md:col-span-1">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-5 h-5 rounded bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white text-[10px]">
+                        <iconify-icon icon="solar:grid-linear"></iconify-icon>
+                    </div>
+                    <span class="text-white font-medium tracking-tight text-sm">GridOps</span>
+                </div>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Turning spreadsheets into software.<br>
+                    San Francisco, CA.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="text-white text-xs font-semibold mb-4">Product</h4>
+                <ul class="space-y-2 text-xs text-slate-500">
+                    <li><a href="#" class="hover:text-slate-300 transition-colors">Integrations</a></li>
+                    <li><a href="#" class="hover:text-slate-300 transition-colors">Templates</a></li>
+                    <li><a href="#" class="hover:text-slate-300 transition-colors">Security</a></li>
+                    <li><a href="#" class="hover:text-slate-300 transition-colors">Changelog</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white text-xs font-semibold mb-4">Company</h4>
+                <ul class="space-y-2 text-xs text-slate-500">
+                    <li><a href="#" class="hover:text-slate-300 transition-colors">About</a></li>
+                    <li><a href="#" class="hover:text-slate-300 transition-colors">Customers</a></li>
+                    <li><a href="#" class="hover:text-slate-300 transition-colors">Blog</a></li>
+                    <li><a href="#" class="hover:text-slate-300 transition-colors">Contact</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white text-xs font-semibold mb-4">Legal</h4>
+                <ul class="space-y-2 text-xs text-slate-500">
+                    <li><a href="#" class="hover:text-slate-300 transition-colors">Privacy</a></li>
+                    <li><a href="#" class="hover:text-slate-300 transition-colors">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between border-t border-white/[0.04] pt-8">
+            <p class="text-[10px] text-slate-600">© 2023 GridOps Inc. All rights reserved.</p>
+            <div class="flex gap-4 mt-4 md:mt-0">
+                <a href="#" class="text-slate-600 hover:text-white transition-colors"><iconify-icon icon="solar:brand-twitter-linear" width="16"></iconify-icon></a>
+                <a href="#" class="text-slate-600 hover:text-white transition-colors"><iconify-icon icon="solar:brand-github-linear" width="16"></iconify-icon></a>
+                <a href="#" class="text-slate-600 hover:text-white transition-colors"><iconify-icon icon="solar:brand-linkedin-linear" width="16"></iconify-icon></a>
+            </div>
+        </div>
+    </footer>
+
+
+</body></html>
