@@ -19,943 +19,662 @@
   <meta property="og:image" content="assets/hero.webp" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
   <style>
-    :root{
-      --bg0:#070914;
-      --bg1:#0b0f19;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.08);
-      --stroke: rgba(255,255,255,.12);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.70);
-      --muted2: rgba(255,255,255,.55);
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-      --shadow2: 0 12px 30px rgba(0,0,0,.35);
-      --radius: 22px;
-      --radius2: 16px;
-      --max: 1120px;
-      --accent1:#7c3aed; /* violet */
-      --accent2:#22c55e; /* green */
-      --accent3:#06b6d4; /* cyan */
-      --accent4:#f97316; /* orange */
-      --focus: 0 0 0 3px rgba(34,197,94,.28), 0 0 0 1px rgba(255,255,255,.15) inset;
+    :root {
+      --bg-page: #020305;
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-surface: rgba(255, 255, 255, 0.03);
     }
 
-    *{ box-sizing: border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color: var(--text);
-      background: radial-gradient(1200px 700px at 18% 10%, rgba(124,58,237,.30), transparent 55%),
-                  radial-gradient(1000px 600px at 82% 18%, rgba(34,197,94,.20), transparent 50%),
-                  radial-gradient(1200px 700px at 50% 85%, rgba(6,182,212,.14), transparent 60%),
-                  linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x:hidden;
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-page);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Animated grid background */
-    .grid-bg{
-      position:fixed; inset:-2px;
-      background:
-        linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
-      background-size: 64px 64px;
-      opacity:.12;
-      pointer-events:none;
-      mask-image: radial-gradient(circle at 50% 10%, rgba(0,0,0,1) 0%, rgba(0,0,0,.82) 40%, rgba(0,0,0,0) 78%);
-      animation: gridDrift 18s linear infinite;
-    }
-    @keyframes gridDrift{
-      from{ background-position: 0 0, 0 0; }
-      to  { background-position: 128px 0, 0 128px; }
+    .bg-grid {
+      background-size: 50px 50px;
+      background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
     }
 
-    /* Subtle noise overlay */
-    .noise{
-      position:fixed; inset:0;
-      pointer-events:none;
-      opacity:.10;
-      mix-blend-mode: overlay;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-      background-size: 280px 280px;
+    .text-gradient {
+      background: linear-gradient(to bottom right, #ffffff 30%, #a5a5a5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    a{ color: inherit; text-decoration: none; }
-    .container{ width:min(var(--max), calc(100% - 40px)); margin:0 auto; }
+    .shine-effect {
+      position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+      transform: skewX(-25deg); transition: 0.5s;
+    }
+    .btn-primary:hover .shine-effect { left: 200%; transition: 0.7s ease-in-out; }
 
-    /* Header */
-    header{
-      position:sticky;
-      top:0;
-      z-index: 50;
-      background: rgba(7,9,20,.55);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 12px 0;
-      gap: 18px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      min-width: 220px;
-    }
-    .brand-logo{
-      height: 26px;
-      width: auto;
-      display:block;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #020305; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
 
-    nav ul{
-      list-style:none; margin:0; padding:0;
-      display:flex; align-items:center; gap:18px;
-      flex-wrap: wrap;
-      justify-content:center;
-    }
-    nav a{
-      font-size: 13px;
-      color: var(--muted);
-      padding: 8px 10px;
-      border-radius: 12px;
-      transition: background .18s ease, color .18s ease;
-    }
-    nav a:hover{ background: rgba(255,255,255,.06); color: var(--text); }
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
 
-    .nav-actions{ display:flex; align-items:center; gap:10px; min-width: 220px; justify-content:flex-end; }
-    .btn{
-      appearance:none;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-size: 13px;
-      line-height: 1;
-      cursor:pointer;
-      transition: transform .12s ease, background .18s ease, border-color .18s ease;
-      user-select:none;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      white-space:nowrap;
-    }
-    .btn:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); }
-    .btn:active{ transform: translateY(0px); }
-    .btn:focus-visible{ outline:none; box-shadow: var(--focus); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
 
-    .btn.primary{
-      border-color: rgba(34,197,94,.28);
-      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(6,182,212,.92));
-      color: rgba(7,9,20,.92);
-      font-weight: 800;
-      box-shadow: 0 14px 38px rgba(34,197,94,.18);
-    }
-
-    .btn.ghost{
-      background: transparent;
-      border-color: rgba(255,255,255,.14);
-      color: var(--muted);
-    }
-    .btn.ghost:hover{ color: var(--text); background: rgba(255,255,255,.06); }
-
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1;
-    }
-    .dot{
-      width:8px; height:8px; border-radius:999px;
-      background: linear-gradient(135deg, var(--accent2), var(--accent3));
-      box-shadow: 0 0 0 3px rgba(34,197,94,.18);
-    }
-
-    main{ position:relative; z-index:2; }
-    section{ padding: 76px 0; }
-
-    /* HERO (stacked) */
-    .hero{ padding: 62px 0 44px; }
-    .hero-copy{ max-width: 74ch; }
-
-    h1{
-      font-size: clamp(36px, 4.2vw, 60px);
-      line-height: 1.02;
-      margin: 14px 0 14px;
-      letter-spacing: -0.02em;
-    }
-    .lead{
-      font-size: clamp(16px, 1.3vw, 18px);
-      line-height: 1.55;
-      color: var(--muted);
-      margin: 0 0 18px;
-    }
-
-    .hero-points{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:10px;
-      margin: 18px 0 18px;
-    }
-    .point{
-      display:flex; gap:12px;
-      align-items:flex-start;
-      padding: 12px 12px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-    .icon{
-      width: 26px; height: 26px; border-radius: 10px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      display:grid; place-items:center;
-      flex:0 0 auto;
-    }
-    .point b{ font-size: 13px; }
-    .point p{ margin: 2px 0 0; font-size: 13px; color: var(--muted2); line-height: 1.45; }
-
-    .hero-actions{ display:flex; gap:10px; flex-wrap: wrap; margin: 14px 0 10px; align-items:center; }
-    .badge{
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.78);
-      display:inline-flex; align-items:center; gap:8px;
-      white-space:nowrap;
-    }
-    .badge strong{ color: rgba(255,255,255,.92); font-weight: 800; }
-
-    .fineprint{
-      font-size: 12px; color: rgba(255,255,255,.50);
-      line-height: 1.35;
-      margin-top: 10px;
-      max-width: 84ch;
-    }
-
-    /* Hero Visual */
-    .hero-visual-wrap{ margin-top: 22px; }
-    .hero-visual{
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .hero-visual::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(circle at 30% 15%, rgba(124,58,237,.30), transparent 55%),
-                  radial-gradient(circle at 75% 20%, rgba(34,197,94,.20), transparent 55%),
-                  radial-gradient(circle at 50% 95%, rgba(6,182,212,.14), transparent 60%);
-      opacity:.85;
-      z-index:0;
-    }
-    .hero-visual img{
-      display:block;
-      width:100%;
-      height:auto;
-      position:relative;
-      z-index:1;
-    }
-    .hero-visual-caption{
-      padding: 12px 14px 14px;
-      position:relative;
-      z-index:2;
-      border-top: 1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.18);
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .hero-visual-caption b{ font-size: 13px; }
-    .hero-visual-caption span{ color: rgba(255,255,255,.60); font-size: 13px; line-height: 1.45; }
-
-    /* Section titles */
-    .section-title{
-      font-size: 13px;
-      color: rgba(255,255,255,.64);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      margin: 0 0 10px;
-    }
-    h2{
-      font-size: clamp(24px, 2.5vw, 36px);
-      line-height: 1.1;
-      margin: 10px 0 12px;
-      letter-spacing: -0.02em;
-    }
-    .sub{
-      color: var(--muted);
-      line-height: 1.6;
-      max-width: 76ch;
-      margin: 0;
-      font-size: 16px;
-    }
-
-    .cards{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 18px;
-    }
-    .card{
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 16px;
-      box-shadow: var(--shadow2);
-      position:relative;
-      overflow:hidden;
-    }
-    .card::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(circle at 20% 20%, rgba(124,58,237,.20), transparent 55%),
-                  radial-gradient(circle at 80% 25%, rgba(34,197,94,.16), transparent 55%),
-                  radial-gradient(circle at 50% 110%, rgba(6,182,212,.12), transparent 60%);
-      opacity:.35;
-      z-index:0;
-    }
-    .card > *{ position:relative; z-index:1; }
-    .card h3{ margin: 10px 0 8px; font-size: 16px; }
-    .card p{ margin: 0; color: var(--muted2); line-height: 1.55; font-size: 14px; }
-    .mini{
-      display:flex; gap:10px; align-items:center;
-      color: rgba(255,255,255,.82);
-      font-size: 13px;
-    }
-    .mini .mark{
-      width: 28px; height: 28px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      display:grid; place-items:center;
-    }
-
-    .two-col{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 18px;
-      align-items: start;
-    }
-    .list{
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 16px;
-      box-shadow: var(--shadow2);
-    }
-    .list h3{ margin: 0 0 10px; font-size: 16px; }
-    .list ul{ margin: 0; padding: 0 0 0 18px; color: var(--muted); }
-    .list li{ margin: 8px 0; line-height: 1.55; }
-    .list b{ color: rgba(255,255,255,.90); }
-
-    /* Screenshots */
-    .shots{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-      margin-top: 18px;
-      align-items: stretch;
-    }
-    .shot{
-      grid-column: span 6;
-      border-radius: var(--radius);
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      box-shadow: var(--shadow2);
-      position:relative;
-    }
-    .shot img{ width:100%; height:auto; display:block; }
-    .shot .cap{
-      padding: 12px 14px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      color: rgba(255,255,255,.72);
-      font-size: 13px;
-      line-height: 1.45;
-      background: rgba(0,0,0,.16);
-    }
-    .shot .cap b{ color: rgba(255,255,255,.92); }
-
-    .shot.full{ grid-column: span 12; }
-
-    /* Video */
-    .video{
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      margin-top: 18px;
-    }
-    .video video{ width:100%; height:auto; display:block; }
-    .video .cap{ padding: 12px 14px; border-top: 1px solid rgba(255,255,255,.08); color: rgba(255,255,255,.65); font-size: 13px; }
-
-    /* Examples */
-    .examples{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 18px;
-    }
-    .example{
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 16px;
-      box-shadow: var(--shadow2);
-      position:relative;
-      overflow:hidden;
-    }
-    .tag{
-      display:inline-flex;
-      font-size: 11px;
-      padding: 6px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-      color: rgba(255,255,255,.70);
-      margin-bottom: 10px;
-    }
-    .example h3{ margin: 0 0 8px; font-size: 16px; }
-    .example p{ margin: 0 0 10px; color: var(--muted2); line-height: 1.55; font-size: 14px; }
-    .kv{ display:grid; gap: 8px; font-size: 13px; color: rgba(255,255,255,.75); }
-    .kv div{ display:flex; gap:8px; }
-    .kv span{ color: rgba(255,255,255,.54); min-width: 80px; }
-
-    /* CTA panel */
-    .cta{
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, rgba(34,197,94,.18), rgba(6,182,212,.12), rgba(124,58,237,.12));
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .cta::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(circle at 20% 30%, rgba(34,197,94,.22), transparent 50%),
-                  radial-gradient(circle at 70% 10%, rgba(124,58,237,.22), transparent 55%),
-                  radial-gradient(circle at 60% 90%, rgba(6,182,212,.18), transparent 60%);
-      opacity:.75;
-    }
-    .cta-inner{
-      position:relative;
-      z-index:1;
-      padding: 22px 18px;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 16px;
-      align-items:center;
-    }
-    .cta h2{ margin: 0 0 8px; }
-    .cta p{ margin: 0; color: rgba(255,255,255,.74); line-height: 1.55; }
-
-    form{
-      display:grid; gap:10px;
-      background: rgba(0,0,0,.16);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow: var(--shadow2);
-    }
-    label{ font-size: 12px; color: rgba(255,255,255,.74); }
-    .row2{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
-    input, textarea{
-      width: 100%;
-      padding: 11px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-      color: var(--text);
-      font-size: 13px;
-      outline:none;
-      transition: border-color .18s ease, box-shadow .18s ease;
-    }
-    textarea{ min-height: 82px; resize: vertical; }
-    input:focus, textarea:focus{ box-shadow: var(--focus); border-color: rgba(34,197,94,.22); }
-    .form-actions{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end; }
-    .hint{ font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.35; }
-
-    /* FAQ */
-    details{
-      border-radius: var(--radius2);
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      padding: 14px 16px;
-      box-shadow: var(--shadow2);
-    }
-    details + details{ margin-top: 10px; }
-    summary{
-      cursor:pointer;
-      font-weight: 650;
-      color: rgba(255,255,255,.88);
-      list-style: none;
-    }
-    summary::-webkit-details-marker{ display:none; }
-    details p{ margin: 10px 0 0; color: var(--muted); line-height: 1.6; }
-
-    /* Footer */
-    footer{
-      padding: 28px 0 38px;
-      color: rgba(255,255,255,.55);
-      font-size: 12px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      background: rgba(7,9,20,.35);
-      backdrop-filter: blur(10px);
-    }
-    .foot{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:18px;
-      flex-wrap:wrap;
-    }
-    .foot a{ color: rgba(255,255,255,.70); }
-    .foot a:hover{ color: rgba(255,255,255,.92); }
-
-    /* Scroll reveal */
-    .reveal{
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-    .reveal.in{
-      opacity: 1;
-      transform: translateY(0px);
-    }
-
-    /* Responsive */
-    @media (max-width: 980px){
-      nav ul{ display:none; }
-      .nav-actions{ min-width: auto; }
-      .cards{ grid-template-columns: 1fr; }
-      .two-col{ grid-template-columns: 1fr; }
-      .examples{ grid-template-columns: 1fr; }
-      .cta-inner{ grid-template-columns: 1fr; }
-      .shots{ grid-template-columns: repeat(12, 1fr); }
-      .shot{ grid-column: span 12; }
-      .brand{ min-width: auto; }
-      .brand-logo{ height: 22px; }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .grid-bg{ animation:none; }
-      .reveal{ opacity:1; transform:none; }
-    }
+    details summary { list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
   </style>
 </head>
 
-<body>
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="noise" aria-hidden="true"></div>
+<body class="text-slate-400 selection:bg-indigo-500/30 selection:text-indigo-200 overflow-x-hidden">
 
-  <header>
-    <div class="container">
-      <div class="nav">
-        <a class="brand" href="#top" aria-label="GridOps.app home">
-          <img class="brand-logo" src="assets/logo-dark.png" alt="GridOps.app" />
+  <!-- Ambient Background Glow -->
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-indigo-900/20 rounded-[100%] blur-[120px] -z-10 pointer-events-none opacity-50"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full z-50 border-b border-white/[0.08] bg-[#020305]/80 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2.5 group">
+        <img src="assets/logo-dark.png" alt="GridOps.app" class="h-6 w-auto" />
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 text-xs font-medium tracking-wide">
+        <a href="#what" class="hover:text-white transition-colors">Why</a>
+        <a href="#how" class="hover:text-white transition-colors">How it works</a>
+        <a href="#use-cases" class="hover:text-white transition-colors">Use cases</a>
+        <a href="#product" class="hover:text-white transition-colors">Product</a>
+        <a href="#examples" class="hover:text-white transition-colors">Examples</a>
+        <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="#sample" class="text-xs font-medium hover:text-white transition-colors hidden sm:block">Get a sample</a>
+        <a href="#demo" class="relative overflow-hidden btn-primary h-8 px-4 rounded-full bg-white text-black text-xs font-semibold flex items-center gap-2 hover:bg-gray-200 transition-colors">
+          <span class="relative z-10">Book a demo</span>
+          <iconify-icon icon="solar:arrow-right-linear" width="14" class="relative z-10"></iconify-icon>
+          <div class="shine-effect"></div>
         </a>
+      </div>
+    </div>
+  </nav>
 
-        <nav aria-label="Primary">
-          <ul>
-            <li><a href="#what">What it does</a></li>
-            <li><a href="#how">How it works</a></li>
-            <li><a href="#use-cases">Use cases</a></li>
-            <li><a href="#product">Product</a></li>
-            <li><a href="#examples">Examples</a></li>
-            <li><a href="#faq">FAQ</a></li>
-          </ul>
-        </nav>
+  <!-- Hero Section -->
+  <header id="top" class="relative pt-28 pb-16 md:pt-40 md:pb-24 overflow-hidden">
+    <div class="absolute inset-0 bg-grid -z-10"></div>
 
-        <div class="nav-actions">
-          <a class="btn ghost" href="#sample">Get a sample</a>
-          <a class="btn primary" href="#demo">Book a demo</a>
+    <div class="max-w-4xl mx-auto px-6 text-center reveal">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-[10px] font-medium tracking-wide mb-8">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+        </span>
+        CONVERT, DON'T REBUILD
+      </div>
+
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-medium text-white tracking-tight leading-[1.08] mb-6">
+        Turn Excel planning models<br>
+        <span class="text-gradient">into deployable apps. Fast.</span>
+      </h1>
+
+      <p class="text-sm md:text-lg text-slate-400 max-w-xl mx-auto leading-relaxed mb-10 font-light">
+        GridOps extracts structure and logic from real-world spreadsheets, helps you map it to dimensions,
+        and generates a deployable model + input forms you can iterate on.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+        <a href="#sample" class="h-10 px-6 rounded-md bg-[#EEEEF0] hover:bg-white text-black text-sm font-medium transition-all shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] flex items-center gap-2">
+          <iconify-icon icon="solar:rocket-linear" width="18"></iconify-icon>
+          Get a sample conversion
+        </a>
+        <a href="#how" class="h-10 px-6 rounded-md border border-white/10 hover:bg-white/5 text-slate-300 hover:text-white text-sm font-medium transition-all flex items-center gap-2 bg-[#0A0C14]">
+          <iconify-icon icon="solar:eye-linear" width="18"></iconify-icon>
+          See how it works
+        </a>
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-[11px] text-slate-400">
+        <iconify-icon icon="solar:graph-up-linear" width="14" class="text-indigo-400"></iconify-icon>
+        <strong class="text-white">Up to 50-100x</strong> less build effort*
+      </div>
+
+      <p class="text-[10px] text-slate-600 mt-3 max-w-md mx-auto">
+        * Based on internal testing on complex enterprise Excel models. Results vary by model complexity and target environment.
+      </p>
+    </div>
+
+    <!-- Hero Visual -->
+    <div class="mt-16 max-w-5xl mx-auto px-6 relative reveal">
+      <div class="relative rounded-xl border border-white/10 bg-[#0A0C14] shadow-2xl shadow-indigo-500/10 overflow-hidden">
+        <!-- Mac Header -->
+        <div class="h-8 border-b border-white/10 bg-[#0F1119] flex items-center px-4 gap-2">
+          <div class="flex gap-1.5">
+            <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+          </div>
+          <div class="mx-auto text-[10px] font-medium text-slate-500 font-mono">Excel workbook → GridOps → deployable app</div>
+        </div>
+
+        <img src="assets/hero.webp" alt="Excel workbook → GridOps mapping → deployable app" class="w-full h-auto block" loading="eager" />
+
+        <div class="border-t border-white/10 bg-[#0A0C14] px-5 py-3 flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <span class="text-xs font-medium text-white">What you're seeing</span>
+            <span class="text-[11px] text-slate-500 ml-2">Real screenshots: Excel → mapping workspace → deployed app-like views.</span>
+          </div>
+          <a href="#product" class="text-[11px] font-medium text-indigo-400 hover:text-indigo-300 transition-colors flex items-center gap-1">
+            See product screenshots <iconify-icon icon="solar:arrow-right-linear" width="12"></iconify-icon>
+          </a>
         </div>
       </div>
+      <!-- Glow behind -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-indigo-500/10 blur-[80px] -z-10 rounded-full"></div>
     </div>
   </header>
 
-  <main id="top">
-    <!-- HERO (stacked) -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-copy reveal">
-          <div class="pill"><span class="dot" aria-hidden="true"></span> Convert, don’t rebuild</div>
-          <h1>Turn Excel planning models into deployable apps. Fast.</h1>
-          <p class="lead">
-            GridOps extracts structure and logic from real-world spreadsheets, helps you map it to dimensions,
-            and generates a deployable model + input forms you can iterate on.
-          </p>
-
-          <div class="hero-points">
-            <div class="point">
-              <div class="icon" aria-hidden="true">⚡</div>
-              <div>
-                <b>Stop hand-rebuilding models</b>
-                <p>Keep the spreadsheet logic. Drop the fragile links, forks, and “v_final_final.xlsx”.</p>
-              </div>
-            </div>
-            <div class="point">
-              <div class="icon" aria-hidden="true">🧭</div>
-              <div>
-                <b>Guided mapping, not guesswork</b>
-                <p>Entity / Period / Scenario / Drivers → explicit, consistent, repeatable.</p>
-              </div>
-            </div>
-            <div class="point">
-              <div class="icon" aria-hidden="true">📦</div>
-              <div>
-                <b>Get a build package</b>
-                <p>Model structure + input forms + validations (not a screenshot or a PDF export).</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="hero-actions">
-            <a class="btn primary" href="#sample">Get a sample conversion</a>
-            <a class="btn" href="#how">See how it works</a>
-            <span class="badge" title="Internal benchmark">
-              <span aria-hidden="true">⬆︎</span>
-              <strong>Up to 50–100×</strong> less build effort*
-            </span>
-          </div>
-
-          <p class="fineprint">
-            * “Up to 50–100×” is based on internal testing on complex enterprise Excel models. Results vary by model complexity and target environment.
-          </p>
-        </div>
-
-        <div class="hero-visual-wrap reveal">
-          <div class="hero-visual" aria-label="Excel to GridOps conversion preview">
-            <img src="assets/hero.webp" alt="Excel workbook → GridOps mapping → deployable app" loading="eager" />
-            <div class="hero-visual-caption">
-              <div>
-                <b>What you’re seeing</b><br />
-                <span>Real screenshots from the demo: Excel → mapping workspace → deployed app-like views.</span>
-              </div>
-              <div>
-                <a class="btn" href="#product">See product screenshots</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROBLEM -->
-    <section id="what">
-      <div class="container reveal">
-        <p class="section-title">Why it exists</p>
-        <h2>Excel is where planning starts. And where it breaks.</h2>
-        <p class="sub">
+  <!-- Why it exists -->
+  <section id="what" class="py-24 border-t border-white/[0.04]">
+    <div class="max-w-6xl mx-auto px-6 reveal">
+      <div class="mb-12">
+        <p class="text-[10px] uppercase tracking-widest text-slate-500 font-medium mb-4">WHY IT EXISTS</p>
+        <h2 class="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight">Excel is where planning starts.<br><span class="text-slate-500">And where it breaks.</span></h2>
+        <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">
           Spreadsheets are flexible, but large planning models become fragile and expensive.
-          The problem isn’t “Excel vs software” — it’s that delivery doesn’t scale when every model is rebuilt by hand.
+          The problem isn't "Excel vs software" — it's that delivery doesn't scale when every model is rebuilt by hand.
         </p>
+      </div>
 
-        <div class="cards">
-          <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🧯</div><b>Every change becomes a mini re-implementation</b></div>
-            <p>Small edits cascade into broken links, retesting, and new “final” versions.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+              <iconify-icon icon="solar:fire-linear" width="20"></iconify-icon>
+            </div>
+            <h3 class="text-base font-medium text-white mb-2">Every change cascades</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Small edits cascade into broken links, retesting, and new "final" versions.</p>
           </div>
-          <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🧠</div><b>Logic lives in people</b></div>
-            <p>When the spreadsheet owner leaves, the model becomes a black box.</p>
+        </div>
+
+        <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+              <iconify-icon icon="solar:user-block-linear" width="20"></iconify-icon>
+            </div>
+            <h3 class="text-base font-medium text-white mb-2">Logic lives in people</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">When the spreadsheet owner leaves, the model becomes a black box.</p>
           </div>
-          <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🪵</div><b>Governance is painful</b></div>
-            <p>Audits, approvals, and “what changed?” turn into manual detective work.</p>
+        </div>
+
+        <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+              <iconify-icon icon="solar:shield-warning-linear" width="20"></iconify-icon>
+            </div>
+            <h3 class="text-base font-medium text-white mb-2">Governance is painful</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Audits, approvals, and "what changed?" turn into manual detective work.</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- HOW -->
-    <section id="how">
-      <div class="container reveal">
-        <p class="section-title">How it works</p>
-        <h2>Upload → Map → Generate. Repeat when Excel changes.</h2>
-        <p class="sub">
+  <!-- How it works -->
+  <section id="how" class="py-24 border-t border-white/[0.04]">
+    <div class="max-w-4xl mx-auto px-6 reveal">
+      <div class="text-center mb-16">
+        <p class="text-[10px] uppercase tracking-widest text-slate-500 font-medium mb-4">HOW IT WORKS</p>
+        <h2 class="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight">Upload → Map → Generate.<br><span class="text-slate-500">Repeat when Excel changes.</span></h2>
+        <p class="text-sm text-slate-400 leading-relaxed max-w-xl mx-auto">
           GridOps extracts model anatomy (inputs, assumptions, calcs, outputs), guides dimension mapping,
           flags risks, and generates a deployable model + input forms you can iterate on.
         </p>
-
-        <div class="two-col">
-          <div class="list">
-            <h3>What you get</h3>
-            <ul>
-              <li><b>Explicit structure</b> instead of implicit spreadsheet conventions</li>
-              <li><b>Controlled inputs</b> (forms) instead of editing formulas everywhere</li>
-              <li><b>Validation checks</b> that surface hidden risks early</li>
-              <li><b>A repeatable build artifact</b> (not a one-off hand craft)</li>
-            </ul>
-          </div>
-
-          <div class="list">
-            <h3>What you stop doing</h3>
-            <ul>
-              <li><b>Weeks of rebuild</b> for each “new” planning model</li>
-              <li><b>Free-form forks</b> and version chaos</li>
-              <li><b>Expert-heavy iteration</b> for simple changes</li>
-              <li><b>Re-testing everything</b> after minor edits</li>
-            </ul>
-          </div>
-        </div>
-
-        <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn primary" href="#sample">Get a sample conversion</a>
-          <a class="btn" href="#product">See product</a>
-          <span class="badge" title="Internal benchmark">
-            <span aria-hidden="true">📉</span> Build effort can drop <strong>dramatically</strong>*
-          </span>
-        </div>
-
-        <p class="fineprint">
-          * Internal benchmarks show up to 50–100× less build effort on complex spreadsheets. Your results depend on the workbook’s structure and target environment.
-        </p>
       </div>
-    </section>
 
-    <!-- USE CASES -->
-    <section id="use-cases">
-      <div class="container reveal">
-        <p class="section-title">Use cases</p>
-        <h2>Best for “big spreadsheet” planning.</h2>
-        <p class="sub">Concrete examples of what teams convert with GridOps.</p>
+      <!-- Timeline -->
+      <div class="relative pl-8 border-l border-white/10 space-y-12 mb-16">
+        <div class="relative">
+          <div class="absolute -left-[37px] top-0 w-4 h-4 rounded-full bg-[#020305] border border-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)] flex items-center justify-center">
+            <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+          </div>
+          <div class="mb-2 flex items-center gap-3">
+            <iconify-icon icon="solar:upload-linear" class="text-indigo-400" width="20"></iconify-icon>
+            <h3 class="text-lg font-medium text-white">Upload workbook</h3>
+          </div>
+          <p class="text-sm text-slate-400 max-w-lg">Drop your .xlsx file. GridOps parses structure, formulas, named ranges, and cross-sheet references.</p>
+        </div>
 
-        <div class="cards">
-          <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">📈</div><b>Budgeting & Forecasting (FP&A)</b></div>
-            <p>Typical Excel: 10–30 tabs, monthly horizon, scenarios, rollups. Output: Entity/Period/Scenario model + driver input form + consistent outputs.</p>
+        <div class="relative">
+          <div class="absolute -left-[37px] top-0 w-4 h-4 rounded-full bg-[#020305] border border-slate-700 flex items-center justify-center">
+            <div class="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
           </div>
-          <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">👥</div><b>Workforce planning</b></div>
-            <p>Typical Excel: headcount, comp assumptions, allocations by org. Output: controlled inputs per owner + allocation logic + consolidated totals.</p>
+          <div class="mb-2 flex items-center gap-3">
+            <iconify-icon icon="solar:magic-stick-3-linear" class="text-slate-400" width="20"></iconify-icon>
+            <h3 class="text-lg font-medium text-white">Map dimensions</h3>
           </div>
-          <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🧾</div><b>Sales & revenue planning</b></div>
-            <p>Typical Excel: conversion rates, ramp curves, scenarios. Output: assumptions form + scenario compare + standardized driver tables.</p>
+          <p class="text-sm text-slate-400 max-w-lg">Entity / Period / Scenario / Drivers — make implicit conventions explicit and consistent.</p>
+        </div>
+
+        <div class="relative">
+          <div class="absolute -left-[37px] top-0 w-4 h-4 rounded-full bg-[#020305] border border-slate-700 flex items-center justify-center">
+            <div class="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
           </div>
-          <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🧮</div><b>Cost allocation / ABC models</b></div>
-            <p>Typical Excel: multi-step allocations with fragile cross-tab links. Output: explicit driver tables + checks (balances, totals, exceptions).</p>
+          <div class="mb-2 flex items-center gap-3">
+            <iconify-icon icon="solar:shield-check-linear" class="text-slate-400" width="20"></iconify-icon>
+            <h3 class="text-lg font-medium text-white">Validate & flag risks</h3>
           </div>
-          <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🏗️</div><b>CapEx / project planning</b></div>
-            <p>Typical Excel: project lists, phasing, approvals, rollups. Output: project inputs + phasing rules + consolidated plan by period/entity.</p>
+          <p class="text-sm text-slate-400 max-w-lg">Surface circular refs, hardcoded constants, and inconsistent ranges before they become bugs.</p>
+        </div>
+
+        <div class="relative">
+          <div class="absolute -left-[37px] top-0 w-4 h-4 rounded-full bg-[#020305] border border-slate-700 flex items-center justify-center">
+            <div class="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
           </div>
-          <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🧩</div><b>Partner / delivery teams</b></div>
-            <p>Turn spreadsheet implementation into a repeatable delivery playbook. Less custom rebuild, more standardized mapping + output packages.</p>
+          <div class="mb-2 flex items-center gap-3">
+            <iconify-icon icon="solar:code-square-linear" class="text-slate-400" width="20"></iconify-icon>
+            <h3 class="text-lg font-medium text-white">Generate build package</h3>
           </div>
+          <p class="text-sm text-slate-400 max-w-lg">Model structure + input forms + validations — a deployable artifact, not a screenshot or PDF export.</p>
         </div>
       </div>
-    </section>
 
-    <!-- PRODUCT -->
-    <section id="product">
-      <div class="container reveal">
-        <p class="section-title">Product</p>
-        <h2>From demo: Excel → mapping workspace → deployed views.</h2>
-        <p class="sub">Screenshots below are from the current demo flow.</p>
-
-        <div class="shots">
-          <figure class="shot">
-            <img src="assets/demo-excel.webp" alt="Excel planning workbook" loading="lazy" />
-            <figcaption class="cap"><b>Before:</b> real-world Excel with tabs, blocks, scenarios, and rollups.</figcaption>
-          </figure>
-
-          <figure class="shot">
-            <img src="assets/demo-mapping.webp" alt="GridOps mapping workspace" loading="lazy" />
-            <figcaption class="cap"><b>Map:</b> make dimensions explicit (region/entity, month/period, scenario, measures).</figcaption>
-          </figure>
-
-          <figure class="shot full">
-            <img src="assets/demo-formula.webp" alt="GridOps formula and explain view" loading="lazy" />
-            <figcaption class="cap"><b>Understand:</b> inspect formulas/logic and surface issues early (before deployment).</figcaption>
-          </figure>
-
-          <figure class="shot full">
-            <img src="assets/demo-app.webp" alt="Deployed app-like data entry view" loading="lazy" />
-            <figcaption class="cap"><b>After:</b> app-like, controlled data entry experience built from the spreadsheet model.</figcaption>
-          </figure>
+      <!-- What you get / What you stop -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+          <h3 class="text-base font-medium text-white mb-4 flex items-center gap-2">
+            <iconify-icon icon="solar:check-circle-linear" class="text-emerald-400" width="18"></iconify-icon>
+            What you get
+          </h3>
+          <ul class="space-y-3 text-sm text-slate-400">
+            <li class="flex items-start gap-2"><span class="text-emerald-400 mt-0.5">+</span> <b class="text-slate-200">Explicit structure</b> instead of implicit spreadsheet conventions</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-400 mt-0.5">+</span> <b class="text-slate-200">Controlled inputs</b> (forms) instead of editing formulas everywhere</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-400 mt-0.5">+</span> <b class="text-slate-200">Validation checks</b> that surface hidden risks early</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-400 mt-0.5">+</span> <b class="text-slate-200">A repeatable build artifact</b> (not a one-off hand craft)</li>
+          </ul>
         </div>
 
-        <div class="video" aria-label="Product demo video" style="margin-top: 18px;">
-          <video controls preload="metadata" poster="assets/hero.webp">
-            <source src="assets/demo.mp4" type="video/mp4" />
-          </video>
-          <div class="cap">Watch a quick walkthrough of the conversion flow.</div>
+        <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+          <h3 class="text-base font-medium text-white mb-4 flex items-center gap-2">
+            <iconify-icon icon="solar:close-circle-linear" class="text-red-400" width="18"></iconify-icon>
+            What you stop doing
+          </h3>
+          <ul class="space-y-3 text-sm text-slate-400">
+            <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">-</span> <b class="text-slate-200">Weeks of rebuild</b> for each "new" planning model</li>
+            <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">-</span> <b class="text-slate-200">Free-form forks</b> and version chaos</li>
+            <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">-</span> <b class="text-slate-200">Expert-heavy iteration</b> for simple changes</li>
+            <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">-</span> <b class="text-slate-200">Re-testing everything</b> after minor edits</li>
+          </ul>
         </div>
       </div>
-    </section>
 
-    <!-- EXAMPLES -->
-    <section id="examples">
-      <div class="container reveal">
-        <p class="section-title">Examples</p>
-        <h2>Common spreadsheet-to-app conversions.</h2>
-        <p class="sub">
+      <div class="mt-8 flex flex-wrap items-center gap-4 justify-center">
+        <a href="#sample" class="h-10 px-6 rounded-md bg-[#EEEEF0] hover:bg-white text-black text-sm font-medium transition-all shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] flex items-center gap-2">
+          <iconify-icon icon="solar:rocket-linear" width="18"></iconify-icon>
+          Get a sample conversion
+        </a>
+        <a href="#product" class="h-10 px-6 rounded-md border border-white/10 hover:bg-white/5 text-slate-300 hover:text-white text-sm font-medium transition-all flex items-center gap-2 bg-[#0A0C14]">
+          See product
+        </a>
+      </div>
+
+      <p class="text-[10px] text-slate-600 mt-4 text-center">
+        * Internal benchmarks show up to 50-100x less build effort on complex spreadsheets. Results depend on workbook structure and target environment.
+      </p>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  <section id="use-cases" class="py-24 border-t border-white/[0.04]">
+    <div class="max-w-6xl mx-auto px-6 reveal">
+      <div class="mb-12">
+        <p class="text-[10px] uppercase tracking-widest text-slate-500 font-medium mb-4">USE CASES</p>
+        <h2 class="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight">Best for "big spreadsheet" planning.</h2>
+        <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">Concrete examples of what teams convert with GridOps.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+              <iconify-icon icon="solar:graph-up-linear" width="20"></iconify-icon>
+            </div>
+            <h3 class="text-base font-medium text-white mb-2">Budgeting & Forecasting (FP&A)</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Typical Excel: 10-30 tabs, monthly horizon, scenarios, rollups. Output: Entity/Period/Scenario model + driver input form + consistent outputs.</p>
+          </div>
+        </div>
+
+        <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+              <iconify-icon icon="solar:users-group-rounded-linear" width="20"></iconify-icon>
+            </div>
+            <h3 class="text-base font-medium text-white mb-2">Workforce planning</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Typical Excel: headcount, comp assumptions, allocations by org. Output: controlled inputs per owner + allocation logic + consolidated totals.</p>
+          </div>
+        </div>
+
+        <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+              <iconify-icon icon="solar:bill-list-linear" width="20"></iconify-icon>
+            </div>
+            <h3 class="text-base font-medium text-white mb-2">Sales & revenue planning</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Typical Excel: conversion rates, ramp curves, scenarios. Output: assumptions form + scenario compare + standardized driver tables.</p>
+          </div>
+        </div>
+
+        <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+              <iconify-icon icon="solar:calculator-linear" width="20"></iconify-icon>
+            </div>
+            <h3 class="text-base font-medium text-white mb-2">Cost allocation / ABC models</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Typical Excel: multi-step allocations with fragile cross-tab links. Output: explicit driver tables + checks (balances, totals, exceptions).</p>
+          </div>
+        </div>
+
+        <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+              <iconify-icon icon="solar:buildings-linear" width="20"></iconify-icon>
+            </div>
+            <h3 class="text-base font-medium text-white mb-2">CapEx / project planning</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Typical Excel: project lists, phasing, approvals, rollups. Output: project inputs + phasing rules + consolidated plan by period/entity.</p>
+          </div>
+        </div>
+
+        <div class="group p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-lg bg-[#1A1D26] border border-white/10 flex items-center justify-center text-white mb-4 shadow-lg">
+              <iconify-icon icon="solar:puzzle-piece-linear" width="20"></iconify-icon>
+            </div>
+            <h3 class="text-base font-medium text-white mb-2">Partner / delivery teams</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Turn spreadsheet implementation into a repeatable delivery playbook. Less custom rebuild, more standardized mapping + output packages.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product -->
+  <section id="product" class="py-24 border-t border-white/[0.04]">
+    <div class="max-w-6xl mx-auto px-6 reveal">
+      <div class="mb-12">
+        <p class="text-[10px] uppercase tracking-widest text-slate-500 font-medium mb-4">PRODUCT</p>
+        <h2 class="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight">From demo: Excel → mapping → deployed views.</h2>
+        <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">Screenshots below are from the current demo flow.</p>
+      </div>
+
+      <!-- Screenshots -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="rounded-xl border border-white/10 bg-[#0A0C14] overflow-hidden shadow-2xl shadow-indigo-500/5">
+          <img src="assets/demo-excel.webp" alt="Excel planning workbook" class="w-full h-auto block" loading="lazy" />
+          <div class="px-5 py-3 border-t border-white/10 text-[11px]">
+            <b class="text-white">Before:</b> <span class="text-slate-500">real-world Excel with tabs, blocks, scenarios, and rollups.</span>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-[#0A0C14] overflow-hidden shadow-2xl shadow-indigo-500/5">
+          <img src="assets/demo-mapping.webp" alt="GridOps mapping workspace" class="w-full h-auto block" loading="lazy" />
+          <div class="px-5 py-3 border-t border-white/10 text-[11px]">
+            <b class="text-white">Map:</b> <span class="text-slate-500">make dimensions explicit (region/entity, month/period, scenario, measures).</span>
+          </div>
+        </div>
+
+        <div class="md:col-span-2 rounded-xl border border-white/10 bg-[#0A0C14] overflow-hidden shadow-2xl shadow-indigo-500/5">
+          <img src="assets/demo-formula.webp" alt="GridOps formula and explain view" class="w-full h-auto block" loading="lazy" />
+          <div class="px-5 py-3 border-t border-white/10 text-[11px]">
+            <b class="text-white">Understand:</b> <span class="text-slate-500">inspect formulas/logic and surface issues early (before deployment).</span>
+          </div>
+        </div>
+
+        <div class="md:col-span-2 rounded-xl border border-white/10 bg-[#0A0C14] overflow-hidden shadow-2xl shadow-indigo-500/5">
+          <img src="assets/demo-app.webp" alt="Deployed app-like data entry view" class="w-full h-auto block" loading="lazy" />
+          <div class="px-5 py-3 border-t border-white/10 text-[11px]">
+            <b class="text-white">After:</b> <span class="text-slate-500">app-like, controlled data entry experience built from the spreadsheet model.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video -->
+      <div class="mt-8 rounded-xl border border-white/10 bg-[#0A0C14] overflow-hidden shadow-2xl shadow-indigo-500/5">
+        <video controls preload="metadata" poster="assets/hero.webp" class="w-full h-auto block">
+          <source src="assets/demo.mp4" type="video/mp4" />
+        </video>
+        <div class="px-5 py-3 border-t border-white/10 text-[11px] text-slate-500">
+          Watch a quick walkthrough of the conversion flow.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Examples -->
+  <section id="examples" class="py-24 border-t border-white/[0.04]">
+    <div class="max-w-6xl mx-auto px-6 reveal">
+      <div class="mb-12">
+        <p class="text-[10px] uppercase tracking-widest text-slate-500 font-medium mb-4">EXAMPLES</p>
+        <h2 class="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight">Common spreadsheet-to-app conversions.</h2>
+        <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">
           Three patterns GridOps converts especially well — budgeting, revenue planning, and workforce planning.
         </p>
+      </div>
 
-        <div class="examples">
-          <div class="example">
-            <span class="tag">Budgeting</span>
-            <h3>Multi-entity FP&amp;A budget workbook</h3>
-            <p>Monthly plan with scenarios, rollups, and heavy lookups across tabs.</p>
-            <div class="kv">
-              <div><span>Typical:</span> 10–30 tabs, drivers + outputs, manual checks</div>
-              <div><span>GridOps:</span> explicit dims + driver forms + validations</div>
-              <div><span>Result:</span> repeatable updates and cleaner review cycles</div>
-            </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Budgeting -->
+        <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] relative overflow-hidden">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-[10px] font-medium tracking-wide mb-4">
+            BUDGETING
           </div>
-
-          <div class="example">
-            <span class="tag">Revenue</span>
-            <h3>Bookings → revenue plan</h3>
-            <p>Ramp curves, churn/expansion, scenario switches, and time-based logic.</p>
-            <div class="kv">
-              <div><span>Typical:</span> assumptions hidden in cells, multiple forks per quarter</div>
-              <div><span>GridOps:</span> assumptions form + scenario compare + checks</div>
-              <div><span>Result:</span> consistent logic across scenarios and versions</div>
-            </div>
-          </div>
-
-          <div class="example">
-            <span class="tag">Workforce</span>
-            <h3>Headcount + allocations model</h3>
-            <p>Comp assumptions, start dates, allocations, and consolidation across owners.</p>
-            <div class="kv">
-              <div><span>Typical:</span> broken links, unclear ownership, slow consolidation</div>
-              <div><span>GridOps:</span> owner-specific inputs + allocations + totals checks</div>
-              <div><span>Result:</span> cleaner handoffs and more reliable rollups</div>
-            </div>
+          <h3 class="text-base font-medium text-white mb-2">Multi-entity FP&A budget workbook</h3>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">Monthly plan with scenarios, rollups, and heavy lookups across tabs.</p>
+          <div class="space-y-2 text-[12px]">
+            <div class="flex gap-2"><span class="text-slate-600 min-w-[60px]">Typical:</span><span class="text-slate-400">10-30 tabs, drivers + outputs, manual checks</span></div>
+            <div class="flex gap-2"><span class="text-slate-600 min-w-[60px]">GridOps:</span><span class="text-slate-400">explicit dims + driver forms + validations</span></div>
+            <div class="flex gap-2"><span class="text-slate-600 min-w-[60px]">Result:</span><span class="text-slate-300">repeatable updates and cleaner review cycles</span></div>
           </div>
         </div>
 
-        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn primary" href="#sample">Get a sample conversion</a>
-          <a class="btn" href="#product">See the product</a>
-        </div>
-      </div>
-    </section>
-
-<!-- FAQ -->
-    <section id="faq">
-      <div class="container reveal">
-        <p class="section-title">FAQ</p>
-        <h2>Quick answers.</h2>
-
-        <details>
-          <summary>Does GridOps replace Excel?</summary>
-          <p>No. Excel stays the source. GridOps converts it into explicit structure + deployable artifacts you can iterate on.</p>
-        </details>
-
-        <details>
-          <summary>What spreadsheets work best?</summary>
-          <p>Planning models with structure: time series, drivers, assumptions blocks, rollups, scenarios. We can assess your workbook quickly and tell you what converts cleanly.</p>
-        </details>
-
-        <details>
-          <summary>Do you preserve every Excel feature (macros, everything)?</summary>
-          <p>GridOps extracts structure and logic. Some Excel-specific constructs may require adaptation depending on your conventions and target environment.</p>
-        </details>
-
-        <details>
-          <summary>How fast is it?</summary>
-          <p>It depends on the workbook. Internal testing on complex enterprise models shows up to <b>50–100×</b> less build effort vs manual rebuild — results vary.</p>
-        </details>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section id="sample" style="padding-top: 52px;">
-      <div class="container reveal">
-        <div class="cta" id="demo">
-          <div class="cta-inner">
-            <div>
-              <p class="section-title" style="margin-bottom:8px;">Try it on your spreadsheet</p>
-              <h2>Send one workbook. We’ll show the conversion.</h2>
-              <p>You’ll get a clear answer: what converts cleanly, what needs adjustment, and what the output looks like.</p>
-              <p class="fineprint" style="margin-top:10px;">We don’t need your entire planning universe to start — one “big” spreadsheet is enough.</p>
-            </div>
-
-            <form id="leadForm" aria-label="Sample conversion request">
-              <div class="row2">
-                <div>
-                  <label for="name">Name</label>
-                  <input id="name" name="name" placeholder="Jane Doe" autocomplete="name" required />
-                </div>
-                <div>
-                  <label for="email">Work email</label>
-                  <input id="email" name="email" type="email" placeholder="jane@company.com" autocomplete="email" required />
-                </div>
-              </div>
-
-              <div>
-                <label for="note">What model is it? (optional)</label>
-                <textarea id="note" name="note" placeholder="e.g., FY26 budget model, 20 tabs, monthly, 4 scenarios, entity rollups..."></textarea>
-              </div>
-
-              <div class="form-actions">
-                <span class="hint" id="formHint">We’ll reply with next steps and a quick assessment.</span>
-                <button class="btn primary" type="submit">Request sample conversion</button>
-              </div>
-            </form>
+        <!-- Revenue -->
+        <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] relative overflow-hidden">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-[10px] font-medium tracking-wide mb-4">
+            REVENUE
+          </div>
+          <h3 class="text-base font-medium text-white mb-2">Bookings → revenue plan</h3>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">Ramp curves, churn/expansion, scenario switches, and time-based logic.</p>
+          <div class="space-y-2 text-[12px]">
+            <div class="flex gap-2"><span class="text-slate-600 min-w-[60px]">Typical:</span><span class="text-slate-400">assumptions hidden in cells, multiple forks per quarter</span></div>
+            <div class="flex gap-2"><span class="text-slate-600 min-w-[60px]">GridOps:</span><span class="text-slate-400">assumptions form + scenario compare + checks</span></div>
+            <div class="flex gap-2"><span class="text-slate-600 min-w-[60px]">Result:</span><span class="text-slate-300">consistent logic across scenarios and versions</span></div>
           </div>
         </div>
 
-        <p class="fineprint" style="margin-top:12px;">We typically respond within 1–2 business days. If you share a workbook, we treat it as confidential.</p>
+        <!-- Workforce -->
+        <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] relative overflow-hidden">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded border border-violet-500/30 bg-violet-500/10 text-violet-300 text-[10px] font-medium tracking-wide mb-4">
+            WORKFORCE
+          </div>
+          <h3 class="text-base font-medium text-white mb-2">Headcount + allocations model</h3>
+          <p class="text-sm text-slate-400 leading-relaxed mb-4">Comp assumptions, start dates, allocations, and consolidation across owners.</p>
+          <div class="space-y-2 text-[12px]">
+            <div class="flex gap-2"><span class="text-slate-600 min-w-[60px]">Typical:</span><span class="text-slate-400">broken links, unclear ownership, slow consolidation</span></div>
+            <div class="flex gap-2"><span class="text-slate-600 min-w-[60px]">GridOps:</span><span class="text-slate-400">owner-specific inputs + allocations + totals checks</span></div>
+            <div class="flex gap-2"><span class="text-slate-600 min-w-[60px]">Result:</span><span class="text-slate-300">cleaner handoffs and more reliable rollups</span></div>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <footer>
-      <div class="container">
-        <div class="foot">
+      <div class="mt-8 flex flex-wrap items-center gap-4 justify-center">
+        <a href="#sample" class="h-10 px-6 rounded-md bg-[#EEEEF0] hover:bg-white text-black text-sm font-medium transition-all shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] flex items-center gap-2">
+          <iconify-icon icon="solar:rocket-linear" width="18"></iconify-icon>
+          Get a sample conversion
+        </a>
+        <a href="#product" class="h-10 px-6 rounded-md border border-white/10 hover:bg-white/5 text-slate-300 hover:text-white text-sm font-medium transition-all flex items-center gap-2 bg-[#0A0C14]">
+          See the product
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-24 border-t border-white/[0.04]">
+    <div class="max-w-3xl mx-auto px-6 reveal">
+      <div class="text-center mb-12">
+        <p class="text-[10px] uppercase tracking-widest text-slate-500 font-medium mb-4">FAQ</p>
+        <h2 class="text-2xl md:text-3xl font-medium text-white tracking-tight">Quick answers.</h2>
+      </div>
+
+      <div class="space-y-3">
+        <details class="group rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 transition-colors hover:border-white/[0.12]">
+          <summary class="cursor-pointer font-medium text-sm text-white flex items-center justify-between">
+            Does GridOps replace Excel?
+            <iconify-icon icon="solar:alt-arrow-down-linear" width="16" class="text-slate-500 group-open:rotate-180 transition-transform"></iconify-icon>
+          </summary>
+          <p class="mt-3 text-sm text-slate-400 leading-relaxed">No. Excel stays the source. GridOps converts it into explicit structure + deployable artifacts you can iterate on.</p>
+        </details>
+
+        <details class="group rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 transition-colors hover:border-white/[0.12]">
+          <summary class="cursor-pointer font-medium text-sm text-white flex items-center justify-between">
+            What spreadsheets work best?
+            <iconify-icon icon="solar:alt-arrow-down-linear" width="16" class="text-slate-500 group-open:rotate-180 transition-transform"></iconify-icon>
+          </summary>
+          <p class="mt-3 text-sm text-slate-400 leading-relaxed">Planning models with structure: time series, drivers, assumptions blocks, rollups, scenarios. We can assess your workbook quickly and tell you what converts cleanly.</p>
+        </details>
+
+        <details class="group rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 transition-colors hover:border-white/[0.12]">
+          <summary class="cursor-pointer font-medium text-sm text-white flex items-center justify-between">
+            Do you preserve every Excel feature (macros, everything)?
+            <iconify-icon icon="solar:alt-arrow-down-linear" width="16" class="text-slate-500 group-open:rotate-180 transition-transform"></iconify-icon>
+          </summary>
+          <p class="mt-3 text-sm text-slate-400 leading-relaxed">GridOps extracts structure and logic. Some Excel-specific constructs may require adaptation depending on your conventions and target environment.</p>
+        </details>
+
+        <details class="group rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 transition-colors hover:border-white/[0.12]">
+          <summary class="cursor-pointer font-medium text-sm text-white flex items-center justify-between">
+            How fast is it?
+            <iconify-icon icon="solar:alt-arrow-down-linear" width="16" class="text-slate-500 group-open:rotate-180 transition-transform"></iconify-icon>
+          </summary>
+          <p class="mt-3 text-sm text-slate-400 leading-relaxed">It depends on the workbook. Internal testing on complex enterprise models shows up to <b class="text-white">50-100x</b> less build effort vs manual rebuild — results vary.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / Lead Form -->
+  <section id="sample" class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-indigo-900/10 to-[#020305] pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-6 relative z-10 reveal" id="demo">
+      <div class="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-8 md:p-12 relative overflow-hidden">
+        <!-- Glow -->
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 blur-[100px] -z-10 rounded-full"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           <div>
-            <img src="assets/logo-dark.png" alt="GridOps.app" style="height:22px; width:auto; display:block; margin-bottom:8px;" />
-            <div>Convert spreadsheets into ops — model + forms + validations.</div>
+            <p class="text-[10px] uppercase tracking-widest text-indigo-400 font-medium mb-4">TRY IT ON YOUR SPREADSHEET</p>
+            <h2 class="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight">Send one workbook. We'll show the conversion.</h2>
+            <p class="text-sm text-slate-400 leading-relaxed mb-3">
+              You'll get a clear answer: what converts cleanly, what needs adjustment, and what the output looks like.
+            </p>
+            <p class="text-[11px] text-slate-600">We don't need your entire planning universe to start — one "big" spreadsheet is enough.</p>
           </div>
 
-          <div style="display:flex; gap:14px; flex-wrap:wrap;">
-            <a href="#what">What it does</a>
-            <a href="#how">How it works</a>
-            <a href="#use-cases">Use cases</a>
-            <a href="#product">Product</a>
-            <a href="#faq">FAQ</a>
-          </div>
+          <form id="leadForm" aria-label="Sample conversion request" class="bg-[#0B0D15] rounded-xl border border-white/10 p-6 shadow-2xl">
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <label for="name" class="block text-[10px] text-slate-400 mb-1.5">Name</label>
+                <input id="name" name="name" placeholder="Jane Doe" autocomplete="name" required
+                       class="w-full bg-[#020305] border border-white/10 rounded-md px-3 py-2.5 text-xs text-white outline-none focus:border-indigo-500 transition-colors" />
+              </div>
+              <div>
+                <label for="email" class="block text-[10px] text-slate-400 mb-1.5">Work email</label>
+                <input id="email" name="email" type="email" placeholder="jane@company.com" autocomplete="email" required
+                       class="w-full bg-[#020305] border border-white/10 rounded-md px-3 py-2.5 text-xs text-white outline-none focus:border-indigo-500 transition-colors" />
+              </div>
+            </div>
 
-          <div style="max-width: 440px;">
-            <div style="margin-bottom:6px;"><b style="color: rgba(255,255,255,.72);">Disclaimer</b></div>
-            <div>“Up to 50–100×” reflects internal testing on complex enterprise Excel models. Results vary by model complexity and target environment.</div>
-          </div>
+            <div class="mb-4">
+              <label for="note" class="block text-[10px] text-slate-400 mb-1.5">What model is it? (optional)</label>
+              <textarea id="note" name="note" rows="3" placeholder="e.g., FY26 budget model, 20 tabs, monthly, 4 scenarios, entity rollups..."
+                        class="w-full bg-[#020305] border border-white/10 rounded-md px-3 py-2.5 text-xs text-white outline-none focus:border-indigo-500 transition-colors resize-vertical"></textarea>
+            </div>
+
+            <div class="flex items-center justify-between gap-4 pt-2 border-t border-white/5">
+              <span class="text-[10px] text-slate-600" id="formHint">We'll reply with next steps and a quick assessment.</span>
+              <button class="bg-white text-black font-semibold text-xs px-5 py-2.5 rounded-md hover:bg-slate-200 transition-colors whitespace-nowrap" type="submit">
+                Request sample
+              </button>
+            </div>
+          </form>
         </div>
 
-        <div style="margin-top:16px; color: rgba(255,255,255,.42);">
-          © <span id="year"></span> GridOps.app
-        </div>
+        <p class="text-[10px] text-slate-600 mt-6">We typically respond within 1-2 business days. If you share a workbook, we treat it as confidential.</p>
       </div>
-    </footer>
-  </main>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.08] bg-[#020305] pt-16 pb-12">
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
+      <div class="col-span-2 md:col-span-1">
+        <div class="flex items-center gap-2 mb-4">
+          <img src="assets/logo-dark.png" alt="GridOps.app" class="h-5 w-auto" />
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Convert spreadsheets into ops — model + forms + validations.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-white text-xs font-semibold mb-4">Product</h4>
+        <ul class="space-y-2 text-xs text-slate-500">
+          <li><a href="#what" class="hover:text-slate-300 transition-colors">Why</a></li>
+          <li><a href="#how" class="hover:text-slate-300 transition-colors">How it works</a></li>
+          <li><a href="#product" class="hover:text-slate-300 transition-colors">Product</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white text-xs font-semibold mb-4">Resources</h4>
+        <ul class="space-y-2 text-xs text-slate-500">
+          <li><a href="#use-cases" class="hover:text-slate-300 transition-colors">Use cases</a></li>
+          <li><a href="#examples" class="hover:text-slate-300 transition-colors">Examples</a></li>
+          <li><a href="#faq" class="hover:text-slate-300 transition-colors">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white text-xs font-semibold mb-4">Disclaimer</h4>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          "Up to 50-100x" reflects internal testing on complex enterprise Excel models. Results vary by model complexity and target environment.
+        </p>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between border-t border-white/[0.04] pt-8">
+      <p class="text-[10px] text-slate-600">&copy; <span id="year"></span> GridOps.app</p>
+    </div>
+  </footer>
 
   <script>
-    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Smooth scroll for internal anchors
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', (e) => {
         const href = a.getAttribute('href');
@@ -967,19 +686,16 @@
       });
     });
 
-    // Scroll reveal
     const io = new IntersectionObserver((entries) => {
       entries.forEach(ent => {
-        if(ent.isIntersecting){
+        if (ent.isIntersecting) {
           ent.target.classList.add('in');
           io.unobserve(ent.target);
         }
       });
-    }, { threshold: 0.12 });
-
+    }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // Lead form: opens a pre-filled email (static-site friendly)
     const CONTACT_EMAIL = "hello@gridops.app";
     const form = document.getElementById("leadForm");
     if (form) {
@@ -988,18 +704,13 @@
         const name = document.getElementById("name").value.trim();
         const email = document.getElementById("email").value.trim();
         const note = document.getElementById("note").value.trim();
-        const subject = encodeURIComponent("GridOps — sample conversion request");
+        const subject = encodeURIComponent("GridOps \u2014 sample conversion request");
         const body = encodeURIComponent(
-          `Name: ${name}
-Work email: ${email}
-
-Model description:
-${note || "(not provided)"}
-`
+          `Name: ${name}\nWork email: ${email}\n\nModel description:\n${note || "(not provided)"}\n`
         );
         window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
         const hint = document.getElementById("formHint");
-        if (hint) hint.textContent = "Your email draft is ready — press Send to request a sample conversion.";
+        if (hint) hint.textContent = "Your email draft is ready \u2014 press Send to request a sample conversion.";
       });
     }
   </script>
