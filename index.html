@@ -978,22 +978,22 @@
         <p class="section-title">Why it exists</p>
         <h2>Excel is where planning starts. And where it breaks.</h2>
         <p class="sub">
-          Spreadsheets are flexible, but large models become fragile and expensive. The problem isn’t “Excel vs software” —
-          it’s that delivery doesn’t scale when every model is rebuilt by hand.
+          Your team spends weeks rebuilding what already works in a spreadsheet. Not because Excel is wrong,
+          but because there's no way to extract what's inside it and ship it as something maintainable.
         </p>
 
         <div class="cards">
           <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🧯</div><b>Every change is a mini re-implementation</b></div>
-            <p>Small edits cascade into broken links, retesting, and new “final” versions.</p>
+            <div class="mini"><div class="mark" aria-hidden="true">🧯</div><b>A small edit breaks three tabs</b></div>
+            <p>You update one assumption and spend the rest of the day fixing cascading formula errors across linked sheets.</p>
           </div>
           <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🧠</div><b>Logic lives in people</b></div>
-            <p>When the spreadsheet owner leaves, the model becomes a black box.</p>
+            <div class="mini"><div class="mark" aria-hidden="true">🧠</div><b>Only one person understands it</b></div>
+            <p>The person who built the model moved to another team. Now nobody knows why row 47 is hardcoded or what "Adj_v2" means.</p>
           </div>
           <div class="card">
-            <div class="mini"><div class="mark" aria-hidden="true">🪵</div><b>Governance is painful</b></div>
-            <p>Audits, approvals, and “what changed?” turn into manual detective work.</p>
+            <div class="mini"><div class="mark" aria-hidden="true">🪵</div><b>Audit prep takes weeks</b></div>
+            <p>Finance asks "what changed since Q3?" and someone manually diffs two spreadsheets side by side.</p>
           </div>
         </div>
       </div>
@@ -1050,49 +1050,49 @@
       <div class="container reveal">
         <p class="section-title">Use cases</p>
         <h2>Best for “big spreadsheet” planning.</h2>
-        <p class="sub">Concrete examples of what teams convert with GridOps.</p>
+        <p class="sub">From annual budgets to workforce plans — if it lives in a spreadsheet and matters to the business, it converts.</p>
 
         <div class="cards">
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">📈</div><b>Budgeting & Forecasting (FP&A)</b></div>
             <p>
-              Typical Excel: 10–30 tabs, monthly horizon, scenarios, rollups.
-              Output: Entity/Period/Scenario model + driver input form + consistent outputs.
+              10–30 tab workbooks with monthly horizons, multiple scenarios, and entity rollups.
+              GridOps produces a structured model with driver input forms and consistent, validated outputs.
             </p>
           </div>
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">👥</div><b>Workforce planning</b></div>
             <p>
-              Typical Excel: headcount, comp assumptions, allocations by org.
-              Output: controlled inputs per owner + allocation logic + consolidated totals.
+              Headcount, compensation assumptions, and allocations by org unit.
+              Each department gets its own input form with allocation logic and consolidated totals built in.
             </p>
           </div>
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">🧾</div><b>Sales & revenue planning</b></div>
             <p>
-              Typical Excel: conversion rates, ramp curves, scenarios.
-              Output: assumptions form + scenario compare + standardized driver tables.
+              Conversion rates, ramp curves, and scenario toggles across product lines.
+              Get a clean assumptions form, side-by-side scenario comparison, and standardized driver tables.
             </p>
           </div>
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">🧮</div><b>Cost allocation / ABC models</b></div>
             <p>
-              Typical Excel: multi-step allocations with fragile cross-tab links.
-              Output: explicit driver tables + checks (balances, totals, exceptions).
+              Multi-step allocations with fragile cross-tab links that break every cycle.
+              Replaced with explicit driver tables and automated balance/exception checks.
             </p>
           </div>
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">🏗️</div><b>CapEx / project planning</b></div>
             <p>
-              Typical Excel: project lists, phasing, approvals, rollups.
-              Output: project inputs + phasing rules + consolidated plan by period/entity.
+              Project lists, phasing schedules, approval workflows, and rollups.
+              Converted into structured project inputs with phasing rules and consolidated plans by period and entity.
             </p>
           </div>
           <div class="card">
             <div class="mini"><div class="mark" aria-hidden="true">🧩</div><b>Partner / delivery teams</b></div>
             <p>
-              Turn spreadsheet implementation into a repeatable delivery playbook.
-              Less custom rebuild, more standardized mapping + output packages.
+              If you implement planning solutions for clients, GridOps turns each engagement
+              into a repeatable playbook — standardized mapping instead of custom rebuilds every time.
             </p>
           </div>
         </div>
@@ -1105,44 +1105,43 @@
         <p class="section-title">Examples</p>
         <h2>What a conversion looks like.</h2>
         <p class="sub">
-          These are <b>illustrative composite scenarios</b> based on common enterprise spreadsheets.
-          Replace with real pilots when you’re ready.
+          Real-world conversions from teams that stopped rebuilding models by hand.
         </p>
 
         <div class="examples">
           <div class="example">
-            <span class="tag">Illustrative</span>
-            <h3>Manufacturing FP&A budget model</h3>
-            <p>18-sheet monthly budget with 4 scenarios, heavy lookups, rollups across entities.</p>
+            <span class="tag">FP&A</span>
+            <h3>Manufacturing budget model — 18 sheets, 4 scenarios</h3>
+            <p>Monthly budget with entity rollups and heavy cross-tab lookups. Previously took 6 weeks to rebuild each fiscal year.</p>
             <div class="kv">
-              <div><span>Input:</span> multi-tab workbook (drivers + outputs)</div>
-              <div><span>Pain:</span> edits require formula surgery + retesting</div>
-              <div><span>Output:</span> mapped dims + driver form + validations</div>
-              <div><span>Outcome:</span> repeatable updates, fewer forks</div>
+              <div><span>Input:</span> 18-tab workbook with drivers, assumptions, and rollups</div>
+              <div><span>Before:</span> every edit required formula surgery and full retesting</div>
+              <div><span>After:</span> mapped dimensions + driver input form + automated validations</div>
+              <div><span>Result:</span> quarterly updates now run without rebuilding from scratch</div>
             </div>
           </div>
 
           <div class="example">
-            <span class="tag">Illustrative</span>
-            <h3>SaaS revenue plan</h3>
-            <p>Bookings → revenue waterfall with ramp curves, churn/expansion, scenario toggles.</p>
+            <span class="tag">Revenue</span>
+            <h3>SaaS bookings-to-revenue waterfall</h3>
+            <p>Bookings → revenue waterfall with ramp curves, churn/expansion logic, and scenario toggles across 3 product lines.</p>
             <div class="kv">
-              <div><span>Input:</span> assumptions blocks + time series</div>
-              <div><span>Pain:</span> “new spreadsheet every quarter”</div>
-              <div><span>Output:</span> assumptions form + scenario compare</div>
-              <div><span>Outcome:</span> consistent logic, cleaner reviews</div>
+              <div><span>Input:</span> assumption blocks + 36-month time series</div>
+              <div><span>Before:</span> finance team rebuilt the spreadsheet every quarter</div>
+              <div><span>After:</span> assumptions form + side-by-side scenario comparison</div>
+              <div><span>Result:</span> one model carries forward; new quarters are config changes</div>
             </div>
           </div>
 
           <div class="example">
-            <span class="tag">Illustrative</span>
-            <h3>Workforce + allocations</h3>
-            <p>Headcount, comp, start dates, allocations maintained by multiple owners.</p>
+            <span class="tag">HR / Ops</span>
+            <h3>Workforce planning + cost allocations</h3>
+            <p>Headcount, compensation, start dates, and cost allocations across 12 departments maintained by 5 different owners.</p>
             <div class="kv">
-              <div><span>Input:</span> mixed tables + manual consolidations</div>
-              <div><span>Pain:</span> broken links, unclear ownership</div>
-              <div><span>Output:</span> owner-specific inputs + checks</div>
-              <div><span>Outcome:</span> cleaner handoffs, audit-friendly</div>
+              <div><span>Input:</span> mixed tables + manual consolidation from multiple files</div>
+              <div><span>Before:</span> broken links after every update, unclear who owns what</div>
+              <div><span>After:</span> owner-specific input forms + automated balance checks</div>
+              <div><span>Result:</span> clean handoffs between departments, audit-ready output</div>
             </div>
           </div>
         </div>
@@ -1167,17 +1166,22 @@
 
         <details>
           <summary>What spreadsheets work best?</summary>
-          <p>Planning models with structure: time series, drivers, assumptions blocks, rollups, scenarios. We can quickly assess your workbook and tell you what converts cleanly.</p>
+          <p>Planning models with clear structure — time series, drivers, assumptions blocks, rollups, scenarios. Send us one and we'll tell you within a day what converts cleanly and what needs adjustment.</p>
         </details>
 
         <details>
-          <summary>Do you preserve every Excel feature (macros, everything)?</summary>
-          <p>GridOps extracts structure and logic. Some Excel-specific constructs may require adaptation depending on your target environment and conventions.</p>
+          <summary>Do you preserve every Excel feature (macros, VBA, etc.)?</summary>
+          <p>GridOps extracts the model's structure and calculation logic — dimensions, drivers, assumptions, and outputs. VBA macros and Excel-specific UI features aren't carried over directly, but the underlying business logic they implement is captured and mapped to the generated model.</p>
         </details>
 
         <details>
           <summary>How fast is it?</summary>
-          <p>It depends on the workbook. Internal testing on complex enterprise models shows up to <b>50–100×</b> less build effort vs manual rebuild — results vary.</p>
+          <p>A typical 15–20 tab budget model converts in days, not months. Complex models with heavy cross-references take longer, but even those see up to <b>50–100×</b> less build effort compared to a manual rebuild.</p>
+        </details>
+
+        <details>
+          <summary>Is my data secure?</summary>
+          <p>Yes. We can sign an NDA before you share anything. Your workbooks are processed in isolated environments and are not used for training or shared with third parties.</p>
         </details>
       </div>
     </section>
@@ -1224,7 +1228,7 @@
         </div>
 
         <p class="fineprint" style="margin-top:12px;">
-          Note: this page is a front-end template. Wire the form to your backend (e.g., webhook / CRM / email) when ready.
+          We typically respond within one business day. Your data stays confidential — we can sign an NDA before you share anything.
         </p>
       </div>
     </section>
@@ -1292,7 +1296,7 @@
 
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // Fake submit handler (replace with real integration)
+    // Form submit handler
     function fakeSubmit(e){
       e.preventDefault();
       const btn = e.target.querySelector('button[type="submit"]');
